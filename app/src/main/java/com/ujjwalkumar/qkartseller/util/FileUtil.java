@@ -1,4 +1,4 @@
-package com.ujjwalkumar.qkartseller;
+package com.ujjwalkumar.qkartseller.util;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
