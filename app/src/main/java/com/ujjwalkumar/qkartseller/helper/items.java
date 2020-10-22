@@ -8,6 +8,16 @@ public class items {
     private String price;
     private String sellerid;
     private String status;
+    
+    items(String detail,String id,String mrp,String name,String price,String sellerid,String status){
+        this.detail=detail;
+        this.id=id;
+        this.mrp=mrp;
+        this.name=name;
+        this.price=price;
+        this.sellerid=sellerid;
+        this.status=status;
+    }
 
     public String getDetail() {
         return detail;
