@@ -10,7 +10,7 @@ public class consumers {
     private String name;
     private String uid;
     
-    consumers(String address,String contact,String email,String img,String lat,String lng,String name,String uid){
+    public consumers(String address,String contact,String email,String img,String lat,String lng,String name,String uid){
         this.address=address;
         this.contact=contact;
         this.email=email;

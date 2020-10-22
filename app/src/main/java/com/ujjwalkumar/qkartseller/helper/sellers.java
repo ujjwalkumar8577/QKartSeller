@@ -11,7 +11,7 @@ public class sellers {
     private String uid;
     private String range;
     
-    sellers(String address,String contact,String email,String img,String lat,String lng,String name,String uid,String range){
+    public sellers(String address,String contact,String email,String img,String lat,String lng,String name,String uid,String range){
         this.address=address;
         this.contact=contact;
         this.email=email;

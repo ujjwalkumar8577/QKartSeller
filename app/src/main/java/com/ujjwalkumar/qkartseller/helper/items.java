@@ -9,7 +9,7 @@ public class items {
     private String sellerid;
     private String status;
     
-    items(String detail,String id,String mrp,String name,String price,String sellerid,String status){
+    public items(String detail,String id,String mrp,String name,String price,String sellerid,String status){
         this.detail=detail;
         this.id=id;
         this.mrp=mrp;
