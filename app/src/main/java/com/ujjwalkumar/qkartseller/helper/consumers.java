@@ -9,6 +9,17 @@ public class consumers {
     private String lng;
     private String name;
     private String uid;
+    
+    consumers(String address,String contact,String email,String img,String lat,String lng,String name,String uid){
+        this.address=address;
+        this.contact=contact;
+        this.email=email;
+        this.img=img;
+        this.lat=lat;
+        this.lng=lng;
+        this.name=name;
+        this.uid=uid;
+    }
 
     public String getAddress() {
         return address;
