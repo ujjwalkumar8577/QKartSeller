@@ -10,6 +10,18 @@ public class sellers {
     private String name;
     private String uid;
     private String range;
+    
+    sellers(String address,String contact,String email,String img,String lat,String lng,String name,String uid,String range){
+        this.address=address;
+        this.contact=contact;
+        this.email=email;
+        this.img=img;
+        this.lat=lat;
+        this.lng=lng;
+        this.name=name;
+        this.uid=uid;
+        this.range=range;
+    }
 
     public String getAddress() {
         return address;
