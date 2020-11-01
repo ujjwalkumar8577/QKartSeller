@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
-
+// this class contains basic functions such as toasting text, get random no., etc.
 public class SketchwareUtil {
     public static void showMessage(Context _context, String _s) {
         Toast.makeText(_context, _s, Toast.LENGTH_SHORT).show();

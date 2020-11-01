@@ -10,7 +10,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
-
+// this class contains necessary functions for Google Maps operations
 public class GoogleMapController {
 
     private GoogleMap googleMap;

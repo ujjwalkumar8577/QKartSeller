@@ -22,7 +22,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
+// this class contains necessary functions for requesting response from network
 public class RequestNetworkController {
     public static final String GET = "GET";
     public static final String POST = "POST";

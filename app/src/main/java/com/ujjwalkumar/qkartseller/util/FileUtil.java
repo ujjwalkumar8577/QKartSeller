@@ -34,7 +34,7 @@ import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
+// this class contains necessary functions for file operations
 public class FileUtil {
 
     private static void createNewFile(String path) {

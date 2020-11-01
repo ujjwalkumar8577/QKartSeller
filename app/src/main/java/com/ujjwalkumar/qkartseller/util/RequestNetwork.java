@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.ujjwalkumar.qkartseller.util.RequestNetworkController;
 
 import java.util.HashMap;
-
+// this class contains necessary functions for requesting response from network
 public class RequestNetwork {
     private HashMap<String, Object> params = new HashMap<>();
     private HashMap<String, Object> headers = new HashMap<>();
