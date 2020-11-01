@@ -1,5 +1,5 @@
 package com.ujjwalkumar.qkartseller;
-
+// this activity is for editing user details
 import android.Manifest;
 import android.app.Activity;
 import android.content.ClipData;

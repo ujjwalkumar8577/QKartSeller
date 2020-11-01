@@ -1,13 +1,13 @@
 package com.ujjwalkumar.qkartseller.helper;
 // this class keeps details of a item
 public class items {
-    private String detail;
-    private String id;
-    private String mrp;
-    private String name;
-    private String price;
-    private String sellerid;
-    private String status;
+    private String detail;      // to store item details
+    private String id;          // to store id
+    private String mrp;         // to store MRP
+    private String name;        // to store name
+    private String price;       // to store selling price
+    private String sellerid;    // to store corresponding seller id
+    private String status;      // to store availability status (1 if available else 0)
 
     // constructor of the items class
     public items(String detail, String id, String mrp, String name, String price, String sellerid, String status){

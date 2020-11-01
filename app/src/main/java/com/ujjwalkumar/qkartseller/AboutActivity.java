@@ -1,5 +1,5 @@
 package com.ujjwalkumar.qkartseller;
-
+// this activity shows About the App section
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;

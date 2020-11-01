@@ -1,5 +1,5 @@
 package com.ujjwalkumar.qkartseller;
-
+// this activity shows all completed orders of the customer
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

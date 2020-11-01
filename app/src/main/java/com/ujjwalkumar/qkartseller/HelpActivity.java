@@ -1,5 +1,5 @@
 package com.ujjwalkumar.qkartseller;
-
+// this activity shows Help and Feedback section
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;

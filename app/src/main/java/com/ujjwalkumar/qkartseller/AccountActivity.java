@@ -1,5 +1,5 @@
 package com.ujjwalkumar.qkartseller;
-
+// this activity shows My Account section
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;

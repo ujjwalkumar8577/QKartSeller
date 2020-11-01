@@ -1,5 +1,5 @@
 package com.ujjwalkumar.qkartseller;
-
+// this activity is the Home activity and opens after splash screen if the user is logged in and shows the pending orders of seller
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;

@@ -1,5 +1,5 @@
 package com.ujjwalkumar.qkartseller;
-
+// this activity is for managing items
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;

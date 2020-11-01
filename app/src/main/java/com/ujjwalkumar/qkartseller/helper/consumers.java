@@ -72,12 +72,12 @@ public class consumers {
         this.lat = lat;
     }
 
-    // getter function for langitude
+    // getter function for longitude
     public String getLng() {
         return lng;
     }
 
-    // setter function for lagitude
+    // setter function for longitude
     public void setLng(String lng) {
         this.lng = lng;
     }

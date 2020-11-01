@@ -1,5 +1,5 @@
 package com.ujjwalkumar.qkartseller;
-
+// this activity shows Login and Signup options
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
