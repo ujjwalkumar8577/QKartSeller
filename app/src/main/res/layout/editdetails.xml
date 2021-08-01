@@ -1,6 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -19,8 +17,8 @@
             android:layout_height="100dp"
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/shop"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/shop" />
 
         <ScrollView
             android:id="@+id/vscroll1"
@@ -33,10 +31,10 @@
                 android:id="@+id/linear4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:alpha="0.9"
                 android:background="#FFFFFF"
                 android:orientation="vertical"
-                android:alpha="0.9">
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/textview1"
@@ -44,29 +42,29 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="Shop Name"
+                    android:textColor="#212121"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="#212121" />
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/linear21"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
                     android:background="#FFCCBC"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
                     <EditText
                         android:id="@+id/edittextname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:textSize="14sp"
-                        android:textColor="#000000"
                         android:hint="Enter your shop name"
-                        android:textColorHint="#607D8B"
+                        android:imeOptions="actionNext"
+                        android:padding="8dp"
                         android:singleLine="true"
-                        android:imeOptions="actionNext" />
+                        android:textColor="#000000"
+                        android:textColorHint="#607D8B"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <TextView
@@ -75,30 +73,30 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="Contact"
+                    android:textColor="#212121"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="#212121" />
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/linear10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
                     android:background="#FFCCBC"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
                     <EditText
                         android:id="@+id/edittextcontact"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:textSize="14sp"
-                        android:textColor="#000000"
                         android:hint="Enter your contact"
-                        android:textColorHint="#607D8B"
-                        android:singleLine="true"
+                        android:imeOptions="actionNext"
                         android:inputType="phone"
-                        android:imeOptions="actionNext" />
+                        android:padding="8dp"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textColorHint="#607D8B"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <TextView
@@ -107,66 +105,66 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="Address"
+                    android:textColor="#212121"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="#212121" />
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/linear11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
                     android:background="#FFCCBC"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
                     <EditText
                         android:id="@+id/edittextaddress1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:textSize="14sp"
-                        android:textColor="#000000"
                         android:hint="House No./Road Name"
-                        android:textColorHint="#607D8B"
+                        android:imeOptions="actionNext"
+                        android:padding="8dp"
                         android:singleLine="true"
-                        android:imeOptions="actionNext" />
+                        android:textColor="#000000"
+                        android:textColorHint="#607D8B"
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/edittextaddress2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:textSize="14sp"
-                        android:textColor="#000000"
                         android:hint="Area/City"
-                        android:textColorHint="#607D8B"
+                        android:imeOptions="actionNext"
+                        android:padding="8dp"
                         android:singleLine="true"
-                        android:imeOptions="actionNext" />
+                        android:textColor="#000000"
+                        android:textColorHint="#607D8B"
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/edittextaddress3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:textSize="14sp"
-                        android:textColor="#000000"
                         android:hint="Landmark (optional)"
-                        android:textColorHint="#607D8B"
+                        android:imeOptions="actionNext"
+                        android:padding="8dp"
                         android:singleLine="true"
-                        android:imeOptions="actionNext" />
+                        android:textColor="#000000"
+                        android:textColorHint="#607D8B"
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/edittextaddress4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:textSize="14sp"
-                        android:textColor="#000000"
                         android:hint="Pincode"
-                        android:textColorHint="#607D8B"
-                        android:singleLine="true"
+                        android:imeOptions="actionNext"
                         android:inputType="numberSigned"
-                        android:imeOptions="actionNext" />
+                        android:padding="8dp"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textColorHint="#607D8B"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <TextView
@@ -175,30 +173,30 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="Range"
+                    android:textColor="#000000"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/linear22"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
                     android:background="#FFCCBC"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="8dp">
 
                     <EditText
                         android:id="@+id/edittextrange"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:textSize="14sp"
-                        android:textColor="#000000"
                         android:hint="Enter delivery range in Km"
-                        android:textColorHint="#607D8B"
-                        android:singleLine="true"
+                        android:imeOptions="actionDone"
                         android:inputType="numberDecimal"
-                        android:imeOptions="actionDone" />
+                        android:padding="8dp"
+                        android:singleLine="true"
+                        android:textColor="#000000"
+                        android:textColorHint="#607D8B"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <TextView
@@ -207,8 +205,8 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="Updating your current location ... "
-                    android:textSize="12sp"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:textSize="12sp" />
 
                 <com.google.android.gms.maps.MapView
                     android:id="@+id/mapview1"
@@ -222,11 +220,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:padding="8dp"
+            android:alpha="0.9"
             android:background="#FF1744"
+            android:padding="8dp"
             android:text="Done"
-            android:textSize="12sp"
             android:textColor="#000000"
-            android:alpha="0.9" />
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>

@@ -6,9 +6,8 @@ import java.io.IOException;
 import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-import javax.net.ssl.HostnameVerifier;
+
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -22,6 +21,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
 // this class contains necessary functions for requesting response from network
 public class RequestNetworkController {
     public static final String GET = "GET";
@@ -34,10 +34,8 @@ public class RequestNetworkController {
 
     private static final int SOCKET_TIMEOUT = 15000;
     private static final int READ_TIMEOUT = 25000;
-
-    protected OkHttpClient client;
-
     private static RequestNetworkController mInstance;
+    protected OkHttpClient client;
 
     public static synchronized RequestNetworkController getInstance() {
         if (mInstance == null) {
@@ -77,12 +75,7 @@ public class RequestNetworkController {
                 builder.connectTimeout(SOCKET_TIMEOUT, TimeUnit.MILLISECONDS);
                 builder.readTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS);
                 builder.writeTimeout(READ_TIMEOUT, TimeUnit.MILLISECONDS);
-                builder.hostnameVerifier(new HostnameVerifier() {
-                    @Override
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true;
-                    }
-                });
+                builder.hostnameVerifier((hostname, session) -> true);
             } catch (Exception e) {
             }
 
@@ -153,23 +146,13 @@ public class RequestNetworkController {
             getClient().newCall(req).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, final IOException e) {
-                    requestNetwork.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            requestListener.onErrorResponse(tag, e.getMessage());
-                        }
-                    });
+                    requestNetwork.getActivity().runOnUiThread(() -> requestListener.onErrorResponse(tag, e.getMessage()));
                 }
 
                 @Override
                 public void onResponse(Call call, final Response response) throws IOException {
                     final String responseBody = response.body().string().trim();
-                    requestNetwork.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            requestListener.onResponse(tag, responseBody);
-                        }
-                    });
+                    requestNetwork.getActivity().runOnUiThread(() -> requestListener.onResponse(tag, responseBody));
                 }
             });
         } catch (Exception e) {

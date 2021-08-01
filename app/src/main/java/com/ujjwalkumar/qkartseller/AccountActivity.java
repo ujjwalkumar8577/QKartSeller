@@ -1,35 +1,26 @@
 package com.ujjwalkumar.qkartseller;
-// this activity shows My Account section
+
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
-import android.util.TypedValue;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 public class AccountActivity extends AppCompatActivity {
 
+    private final Intent inp = new Intent();
     private LinearLayout linear4;
     private LinearLayout linearedit;
     private TextView textviewsignout;
@@ -39,8 +30,6 @@ public class AccountActivity extends AppCompatActivity {
     private TextView textviewcontact;
     private TextView textviewemail;
     private TextView textviewaddress;
-
-    private Intent inp = new Intent();
     private SharedPreferences sp1;
     private FirebaseAuth auth;
     private OnCompleteListener<AuthResult> _auth_create_user_listener;
@@ -53,109 +42,78 @@ public class AccountActivity extends AppCompatActivity {
         super.onCreate(_savedInstanceState);
         setContentView(R.layout.account);
         com.google.firebase.FirebaseApp.initializeApp(this);
-        initialize(_savedInstanceState);
-        initializeLogic();
-    }
 
-    private void initialize(Bundle _savedInstanceState) {
-
-        linear4 = (LinearLayout) findViewById(R.id.linear4);
-        linearedit = (LinearLayout) findViewById(R.id.linearedit);
-        textviewsignout = (TextView) findViewById(R.id.textviewsignout);
-        imageviewback = (ImageView) findViewById(R.id.imageviewback);
-        imageviewprofile = (ImageView) findViewById(R.id.imageviewprofile);
-        textviewname = (TextView) findViewById(R.id.textviewname);
-        textviewcontact = (TextView) findViewById(R.id.textviewcontact);
-        textviewemail = (TextView) findViewById(R.id.textviewemail);
-        textviewaddress = (TextView) findViewById(R.id.textviewaddress);
+        linear4 = findViewById(R.id.linear4);
+        linearedit = findViewById(R.id.linearedit);
+        textviewsignout = findViewById(R.id.textviewsignout);
+        imageviewback = findViewById(R.id.imageviewback);
+        imageviewprofile = findViewById(R.id.imageviewprofile);
+        textviewname = findViewById(R.id.textviewname);
+        textviewcontact = findViewById(R.id.textviewcontact);
+        textviewemail = findViewById(R.id.textviewemail);
+        textviewaddress = findViewById(R.id.textviewaddress);
         sp1 = getSharedPreferences("info", Activity.MODE_PRIVATE);
         auth = FirebaseAuth.getInstance();
         confirm = new AlertDialog.Builder(this);
 
-        linearedit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View _view) {
+        linearedit.setOnClickListener(_view -> {
+            inp.setAction(Intent.ACTION_VIEW);
+            inp.setClass(getApplicationContext(), EditdetailsActivity.class);
+            inp.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(inp);
+            finish();
+        });
+
+        textviewsignout.setOnClickListener(_view -> {
+            confirm.setTitle("Sign out");
+            confirm.setMessage("Do you want to sign out?");
+            confirm.setPositiveButton("Yes", (_dialog, _which) -> {
+                FirebaseAuth.getInstance().signOut();
+                sp1.edit().putString("uid", "").apply();
+                sp1.edit().putString("email", "").apply();
+                sp1.edit().putString("name", "").apply();
+                sp1.edit().putString("address", "").apply();
+                sp1.edit().putString("lat", "").apply();
+                sp1.edit().putString("lng", "").apply();
+                sp1.edit().putString("contact", "").apply();
+                sp1.edit().putString("img", "").apply();
                 inp.setAction(Intent.ACTION_VIEW);
-                inp.setClass(getApplicationContext(), EditdetailsActivity.class);
+                inp.setClass(getApplicationContext(), AuthenticateActivity.class);
                 inp.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(inp);
                 finish();
-            }
+            });
+            confirm.setNegativeButton("No", (_dialog, _which) -> {
+
+            });
+            confirm.create().show();
         });
 
-        textviewsignout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View _view) {
-                confirm.setTitle("Sign out");
-                confirm.setMessage("Do you want to sign out?");
-                confirm.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface _dialog, int _which) {
-                        FirebaseAuth.getInstance().signOut();
-                        sp1.edit().putString("uid", "").commit();
-                        sp1.edit().putString("email", "").commit();
-                        sp1.edit().putString("name", "").commit();
-                        sp1.edit().putString("address", "").commit();
-                        sp1.edit().putString("lat", "").commit();
-                        sp1.edit().putString("lng", "").commit();
-                        sp1.edit().putString("contact", "").commit();
-                        sp1.edit().putString("img", "").commit();
-                        inp.setAction(Intent.ACTION_VIEW);
-                        inp.setClass(getApplicationContext(), AuthenticateActivity.class);
-                        inp.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        startActivity(inp);
-                        finish();
-                    }
-                });
-                confirm.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface _dialog, int _which) {
-
-                    }
-                });
-                confirm.create().show();
-            }
+        imageviewback.setOnClickListener(_view -> {
+            inp.setAction(Intent.ACTION_VIEW);
+            inp.setClass(getApplicationContext(), HomeActivity.class);
+            inp.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(inp);
+            finish();
         });
 
-        imageviewback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View _view) {
-                inp.setAction(Intent.ACTION_VIEW);
-                inp.setClass(getApplicationContext(), HomeActivity.class);
-                inp.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(inp);
-                finish();
-            }
-        });
+        _auth_create_user_listener = _param1 -> {
+            final boolean _success = _param1.isSuccessful();
+            final String _errorMessage = _param1.getException() != null ? _param1.getException().getMessage() : "";
 
-        _auth_create_user_listener = new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(Task<AuthResult> _param1) {
-                final boolean _success = _param1.isSuccessful();
-                final String _errorMessage = _param1.getException() != null ? _param1.getException().getMessage() : "";
-
-            }
         };
 
-        _auth_sign_in_listener = new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(Task<AuthResult> _param1) {
-                final boolean _success = _param1.isSuccessful();
-                final String _errorMessage = _param1.getException() != null ? _param1.getException().getMessage() : "";
+        _auth_sign_in_listener = _param1 -> {
+            final boolean _success = _param1.isSuccessful();
+            final String _errorMessage = _param1.getException() != null ? _param1.getException().getMessage() : "";
 
-            }
         };
 
-        _auth_reset_password_listener = new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(Task<Void> _param1) {
-                final boolean _success = _param1.isSuccessful();
+        _auth_reset_password_listener = _param1 -> {
+            final boolean _success = _param1.isSuccessful();
 
-            }
         };
-    }
 
-    private void initializeLogic() {
         android.graphics.drawable.GradientDrawable gd1 = new android.graphics.drawable.GradientDrawable();
         gd1.setColor(Color.parseColor("#B0BEC5"));
         gd1.setCornerRadius(180);
@@ -171,68 +129,6 @@ public class AccountActivity extends AppCompatActivity {
         if (!sp1.getString("img", "").equals("")) {
             Glide.with(getApplicationContext()).load(Uri.parse(sp1.getString("img", ""))).into(imageviewprofile);
         }
-    }
-
-    @Override
-    protected void onActivityResult(int _requestCode, int _resultCode, Intent _data) {
-        super.onActivityResult(_requestCode, _resultCode, _data);
-
-        switch (_requestCode) {
-
-            default:
-                break;
-        }
-    }
-
-    @Deprecated
-    public void showMessage(String _s) {
-        Toast.makeText(getApplicationContext(), _s, Toast.LENGTH_SHORT).show();
-    }
-
-    @Deprecated
-    public int getLocationX(View _v) {
-        int[] _location = new int[2];
-        _v.getLocationInWindow(_location);
-        return _location[0];
-    }
-
-    @Deprecated
-    public int getLocationY(View _v) {
-        int[] _location = new int[2];
-        _v.getLocationInWindow(_location);
-        return _location[1];
-    }
-
-    @Deprecated
-    public int getRandom(int _min, int _max) {
-        Random random = new Random();
-        return random.nextInt(_max - _min + 1) + _min;
-    }
-
-    @Deprecated
-    public ArrayList<Double> getCheckedItemPositionsToArray(ListView _list) {
-        ArrayList<Double> _result = new ArrayList<Double>();
-        SparseBooleanArray _arr = _list.getCheckedItemPositions();
-        for (int _iIdx = 0; _iIdx < _arr.size(); _iIdx++) {
-            if (_arr.valueAt(_iIdx))
-                _result.add((double) _arr.keyAt(_iIdx));
-        }
-        return _result;
-    }
-
-    @Deprecated
-    public float getDip(int _input) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _input, getResources().getDisplayMetrics());
-    }
-
-    @Deprecated
-    public int getDisplayWidthPixels() {
-        return getResources().getDisplayMetrics().widthPixels;
-    }
-
-    @Deprecated
-    public int getDisplayHeightPixels() {
-        return getResources().getDisplayMetrics().heightPixels;
     }
 
 }

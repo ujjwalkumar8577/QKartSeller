@@ -1,5 +1,5 @@
 package com.ujjwalkumar.qkartseller;
-// this activity is for editing user details
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.ClipData;
@@ -13,24 +13,19 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
-import android.util.TypedValue;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,29 +46,29 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.ujjwalkumar.qkartseller.util.FileUtil;
 import com.ujjwalkumar.qkartseller.util.GoogleMapController;
-import com.ujjwalkumar.qkartseller.util.SketchwareUtil;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class EditdetailsActivity extends AppCompatActivity {
 
     public final int REQ_CD_IMAGEPICKER = 101;
-    private Timer _timer = new Timer();
-    private FirebaseDatabase _firebase = FirebaseDatabase.getInstance();
-    private FirebaseStorage _firebase_storage = FirebaseStorage.getInstance();
-
+    private final Timer _timer = new Timer();
+    private final FirebaseDatabase _firebase = FirebaseDatabase.getInstance();
+    private final FirebaseStorage _firebase_storage = FirebaseStorage.getInstance();
+    private final Intent ine = new Intent();
+    private final DatabaseReference db1 = _firebase.getReference("sellers");
+    private final Intent imagePicker = new Intent(Intent.ACTION_GET_CONTENT);
+    private final StorageReference fbstorage = _firebase_storage.getReference("users");
     private double lat = 0;
     private double lng = 0;
     private HashMap<String, Object> mp = new HashMap<>();
     private boolean mapReady = false;
     private String downloadURL = "";
     private String path = "";
-
     private ImageView imageviewprofile;
     private Button buttondone;
     private LinearLayout linear4;
@@ -91,20 +86,15 @@ public class EditdetailsActivity extends AppCompatActivity {
     private EditText edittextaddress3;
     private EditText edittextaddress4;
     private EditText edittextrange;
-
     private FirebaseAuth auth;
     private OnCompleteListener<AuthResult> _auth_create_user_listener;
     private OnCompleteListener<AuthResult> _auth_sign_in_listener;
     private OnCompleteListener<Void> _auth_reset_password_listener;
-    private Intent ine = new Intent();
-    private DatabaseReference db1 = _firebase.getReference("sellers");
     private ChildEventListener _db1_child_listener;
     private LocationManager locate;
     private LocationListener _locate_location_listener;
     private SharedPreferences sp1;
     private TimerTask wait;
-    private Intent imagePicker = new Intent(Intent.ACTION_GET_CONTENT);
-    private StorageReference fbstorage = _firebase_storage.getReference("users");
     private OnCompleteListener<Uri> _fbstorage_upload_success_listener;
     private OnSuccessListener<FileDownloadTask.TaskSnapshot> _fbstorage_download_success_listener;
     private OnSuccessListener _fbstorage_delete_success_listener;
@@ -117,7 +107,7 @@ public class EditdetailsActivity extends AppCompatActivity {
         super.onCreate(_savedInstanceState);
         setContentView(R.layout.editdetails);
         com.google.firebase.FirebaseApp.initializeApp(this);
-        initialize(_savedInstanceState);
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
@@ -125,99 +115,77 @@ public class EditdetailsActivity extends AppCompatActivity {
         } else {
             initializeLogic();
         }
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1000) {
-            initializeLogic();
-        }
-    }
-
-    private void initialize(Bundle _savedInstanceState) {
-
-        imageviewprofile = (ImageView) findViewById(R.id.imageviewprofile);
-        buttondone = (Button) findViewById(R.id.buttondone);
-        linear4 = (LinearLayout) findViewById(R.id.linear4);
-        linear21 = (LinearLayout) findViewById(R.id.linear21);
-        linear10 = (LinearLayout) findViewById(R.id.linear10);
-        linear11 = (LinearLayout) findViewById(R.id.linear11);
-        linear22 = (LinearLayout) findViewById(R.id.linear22);
-        textviewstatus = (TextView) findViewById(R.id.textviewstatus);
-        mapview1 = (MapView) findViewById(R.id.mapview1);
+        imageviewprofile = findViewById(R.id.imageviewprofile);
+        buttondone = findViewById(R.id.buttondone);
+        linear4 = findViewById(R.id.linear4);
+        linear21 = findViewById(R.id.linear21);
+        linear10 = findViewById(R.id.linear10);
+        linear11 = findViewById(R.id.linear11);
+        linear22 = findViewById(R.id.linear22);
+        textviewstatus = findViewById(R.id.textviewstatus);
+        mapview1 = findViewById(R.id.mapview1);
         mapview1.onCreate(_savedInstanceState);
 
-        edittextname = (EditText) findViewById(R.id.edittextname);
-        edittextcontact = (EditText) findViewById(R.id.edittextcontact);
-        edittextaddress1 = (EditText) findViewById(R.id.edittextaddress1);
-        edittextaddress2 = (EditText) findViewById(R.id.edittextaddress2);
-        edittextaddress3 = (EditText) findViewById(R.id.edittextaddress3);
-        edittextaddress4 = (EditText) findViewById(R.id.edittextaddress4);
-        edittextrange = (EditText) findViewById(R.id.edittextrange);
+        edittextname = findViewById(R.id.edittextname);
+        edittextcontact = findViewById(R.id.edittextcontact);
+        edittextaddress1 = findViewById(R.id.edittextaddress1);
+        edittextaddress2 = findViewById(R.id.edittextaddress2);
+        edittextaddress3 = findViewById(R.id.edittextaddress3);
+        edittextaddress4 = findViewById(R.id.edittextaddress4);
+        edittextrange = findViewById(R.id.edittextrange);
         auth = FirebaseAuth.getInstance();
         locate = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         sp1 = getSharedPreferences("info", Activity.MODE_PRIVATE);
         imagePicker.setType("image/*");
         imagePicker.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 
-        imageviewprofile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View _view) {
-                startActivityForResult(imagePicker, REQ_CD_IMAGEPICKER);
-            }
-        });
+        imageviewprofile.setOnClickListener(_view -> startActivityForResult(imagePicker, REQ_CD_IMAGEPICKER));
 
-        buttondone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View _view) {
-                if (!edittextname.getText().toString().equals("")) {
-                    if (!edittextcontact.getText().toString().equals("")) {
-                        if (!edittextaddress1.getText().toString().equals("")) {
-                            if (!edittextrange.getText().toString().equals("")) {
-                                if (!(lat == 0)) {
-                                    _save_info();
-                                    mp = new HashMap<>();
-                                    mp.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                    mp.put("email", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                                    mp.put("name", sp1.getString("name", ""));
-                                    mp.put("address", sp1.getString("address", ""));
-                                    mp.put("contact", sp1.getString("contact", ""));
-                                    mp.put("range", sp1.getString("range", ""));
-                                    mp.put("img", sp1.getString("img", ""));
-                                    mp.put("lat", sp1.getString("lat", ""));
-                                    mp.put("lng", sp1.getString("lng", ""));
-                                    db1.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(mp);
-                                    SketchwareUtil.showMessage(getApplicationContext(), "saved successfully");
-                                    ine.setAction(Intent.ACTION_VIEW);
-                                    ine.setClass(getApplicationContext(), HomeActivity.class);
-                                    ine.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                    startActivity(ine);
-                                    finish();
-                                } else {
-                                    SketchwareUtil.showMessage(getApplicationContext(), "Location not updated");
-                                }
+        buttondone.setOnClickListener(_view -> {
+            if (!edittextname.getText().toString().equals("")) {
+                if (!edittextcontact.getText().toString().equals("")) {
+                    if (!edittextaddress1.getText().toString().equals("")) {
+                        if (!edittextrange.getText().toString().equals("")) {
+                            if (!(lat == 0)) {
+                                _save_info();
+                                mp = new HashMap<>();
+                                mp.put("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                mp.put("email", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                                mp.put("name", sp1.getString("name", ""));
+                                mp.put("address", sp1.getString("address", ""));
+                                mp.put("contact", sp1.getString("contact", ""));
+                                mp.put("range", sp1.getString("range", ""));
+                                mp.put("img", sp1.getString("img", ""));
+                                mp.put("lat", sp1.getString("lat", ""));
+                                mp.put("lng", sp1.getString("lng", ""));
+                                db1.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(mp);
+                                Toast.makeText(this, "Saved successfully", Toast.LENGTH_SHORT).show();
+                                ine.setAction(Intent.ACTION_VIEW);
+                                ine.setClass(getApplicationContext(), HomeActivity.class);
+                                ine.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                startActivity(ine);
+                                finish();
                             } else {
-                                SketchwareUtil.showMessage(getApplicationContext(), "Enter delivery range");
+                                Toast.makeText(this, "Location not updated", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            SketchwareUtil.showMessage(getApplicationContext(), "Enter address");
+                            Toast.makeText(this, "Enter delivery range", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        SketchwareUtil.showMessage(getApplicationContext(), "Enter contact");
+                        Toast.makeText(this, "Enter address", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    SketchwareUtil.showMessage(getApplicationContext(), "Enter name");
+                    Toast.makeText(this, "Enter contact", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Toast.makeText(this, "Enter name", Toast.LENGTH_SHORT).show();
             }
         });
 
-        _mapview1_controller = new GoogleMapController(mapview1, new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap _googleMap) {
-                _mapview1_controller.setGoogleMap(_googleMap);
-                mapReady = true;
-            }
+        _mapview1_controller = new GoogleMapController(mapview1, _googleMap -> {
+            _mapview1_controller.setGoogleMap(_googleMap);
+            mapReady = true;
         });
 
         _db1_child_listener = new ChildEventListener() {
@@ -287,80 +255,61 @@ public class EditdetailsActivity extends AppCompatActivity {
             }
         };
 
-        _fbstorage_upload_progress_listener = new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(UploadTask.TaskSnapshot _param1) {
-                double _progressValue = (100.0 * _param1.getBytesTransferred()) / _param1.getTotalByteCount();
+        _fbstorage_upload_progress_listener = (OnProgressListener<UploadTask.TaskSnapshot>) _param1 -> {
+            double _progressValue = (100.0 * _param1.getBytesTransferred()) / _param1.getTotalByteCount();
 
-            }
         };
 
-        _fbstorage_download_progress_listener = new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(FileDownloadTask.TaskSnapshot _param1) {
-                double _progressValue = (100.0 * _param1.getBytesTransferred()) / _param1.getTotalByteCount();
+        _fbstorage_download_progress_listener = (OnProgressListener<FileDownloadTask.TaskSnapshot>) _param1 -> {
+            double _progressValue = (100.0 * _param1.getBytesTransferred()) / _param1.getTotalByteCount();
 
-            }
         };
 
-        _fbstorage_upload_success_listener = new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(Task<Uri> _param1) {
-                final String _downloadUrl = _param1.getResult().toString();
-                downloadURL = _downloadUrl;
-                imageviewprofile.setAlpha((float) (1));
-                SketchwareUtil.showMessage(getApplicationContext(), "Image uploaded successfully");
-            }
+        _fbstorage_upload_success_listener = _param1 -> {
+            final String _downloadUrl = _param1.getResult().toString();
+            downloadURL = _downloadUrl;
+            imageviewprofile.setAlpha((float) (1));
+            Toast.makeText(this, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
         };
 
-        _fbstorage_download_success_listener = new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot _param1) {
-                final long _totalByteCount = _param1.getTotalByteCount();
+        _fbstorage_download_success_listener = _param1 -> {
+            final long _totalByteCount = _param1.getTotalByteCount();
 
-            }
         };
 
-        _fbstorage_delete_success_listener = new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object _param1) {
+        _fbstorage_delete_success_listener = _param1 -> {
 
-            }
         };
 
-        _fbstorage_failure_listener = new OnFailureListener() {
-            @Override
-            public void onFailure(Exception _param1) {
-                final String _message = _param1.getMessage();
-                SketchwareUtil.showMessage(getApplicationContext(), "Image not uploaded");
-            }
+        _fbstorage_failure_listener = _param1 -> {
+            final String _message = _param1.getMessage();
+            Toast.makeText(this, "Image not uploaded", Toast.LENGTH_SHORT).show();
         };
 
-        _auth_create_user_listener = new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(Task<AuthResult> _param1) {
-                final boolean _success = _param1.isSuccessful();
-                final String _errorMessage = _param1.getException() != null ? _param1.getException().getMessage() : "";
+        _auth_create_user_listener = _param1 -> {
+            final boolean _success = _param1.isSuccessful();
+            final String _errorMessage = _param1.getException() != null ? _param1.getException().getMessage() : "";
 
-            }
         };
 
-        _auth_sign_in_listener = new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(Task<AuthResult> _param1) {
-                final boolean _success = _param1.isSuccessful();
-                final String _errorMessage = _param1.getException() != null ? _param1.getException().getMessage() : "";
+        _auth_sign_in_listener = _param1 -> {
+            final boolean _success = _param1.isSuccessful();
+            final String _errorMessage = _param1.getException() != null ? _param1.getException().getMessage() : "";
 
-            }
         };
 
-        _auth_reset_password_listener = new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(Task<Void> _param1) {
-                final boolean _success = _param1.isSuccessful();
+        _auth_reset_password_listener = _param1 -> {
+            final boolean _success = _param1.isSuccessful();
 
-            }
         };
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1000) {
+            initializeLogic();
+        }
     }
 
     private void initializeLogic() {
@@ -401,7 +350,7 @@ public class EditdetailsActivity extends AppCompatActivity {
             String bestProvider = locate.getBestProvider(criteria, true);
             Location location = locate.getLastKnownLocation(bestProvider);
             if (location == null) {
-                SketchwareUtil.showMessage(getApplicationContext(), "Please check your GPS");
+                Toast.makeText(this, "Please check yoour GPS", Toast.LENGTH_SHORT).show();
             }
             if (location != null) {
                 lat = location.getLatitude();
@@ -440,15 +389,10 @@ public class EditdetailsActivity extends AppCompatActivity {
                             _filePath.add(FileUtil.convertUriToFilePath(getApplicationContext(), _data.getData()));
                         }
                     }
-                    path = _filePath.get((int) (0));
+                    path = _filePath.get(0);
                     imageviewprofile.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(path, 1024, 1024));
                     imageviewprofile.setAlpha((float) (0.5d));
-                    fbstorage.child(FirebaseAuth.getInstance().getCurrentUser().getUid().concat(Uri.parse(path).getLastPathSegment())).putFile(Uri.fromFile(new File(path))).addOnFailureListener(_fbstorage_failure_listener).addOnProgressListener(_fbstorage_upload_progress_listener).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                        @Override
-                        public Task<Uri> then(Task<UploadTask.TaskSnapshot> task) throws Exception {
-                            return fbstorage.child(FirebaseAuth.getInstance().getCurrentUser().getUid().concat(Uri.parse(path).getLastPathSegment())).getDownloadUrl();
-                        }
-                    }).addOnCompleteListener(_fbstorage_upload_success_listener);
+                    fbstorage.child(FirebaseAuth.getInstance().getCurrentUser().getUid().concat(Uri.parse(path).getLastPathSegment())).putFile(Uri.fromFile(new File(path))).addOnFailureListener(_fbstorage_failure_listener).addOnProgressListener(_fbstorage_upload_progress_listener).continueWithTask((Continuation<UploadTask.TaskSnapshot, Task<Uri>>) task -> fbstorage.child(FirebaseAuth.getInstance().getCurrentUser().getUid().concat(Uri.parse(path).getLastPathSegment())).getDownloadUrl()).addOnCompleteListener(_fbstorage_upload_success_listener);
                 } else {
 
                 }
@@ -491,17 +435,16 @@ public class EditdetailsActivity extends AppCompatActivity {
     }
 
     private void _save_info() {
-        sp1.edit().putString("uid", FirebaseAuth.getInstance().getCurrentUser().getUid()).commit();
-        sp1.edit().putString("email", FirebaseAuth.getInstance().getCurrentUser().getEmail()).commit();
-        sp1.edit().putString("name", edittextname.getText().toString()).commit();
-        sp1.edit().putString("address", edittextaddress1.getText().toString().concat(" , ".concat(edittextaddress2.getText().toString().concat(" \n".concat(edittextaddress3.getText().toString().concat(" \n".concat(edittextaddress4.getText().toString()))))))).commit();
-        sp1.edit().putString("contact", edittextcontact.getText().toString()).commit();
-        sp1.edit().putString("range", edittextrange.getText().toString()).commit();
-        sp1.edit().putString("img", downloadURL).commit();
-        sp1.edit().putString("lat", String.valueOf(lat)).commit();
-        sp1.edit().putString("lng", String.valueOf(lng)).commit();
+        sp1.edit().putString("uid", FirebaseAuth.getInstance().getCurrentUser().getUid()).apply();
+        sp1.edit().putString("email", FirebaseAuth.getInstance().getCurrentUser().getEmail()).apply();
+        sp1.edit().putString("name", edittextname.getText().toString()).apply();
+        sp1.edit().putString("address", edittextaddress1.getText().toString().concat(" , ".concat(edittextaddress2.getText().toString().concat(" \n".concat(edittextaddress3.getText().toString().concat(" \n".concat(edittextaddress4.getText().toString()))))))).apply();
+        sp1.edit().putString("contact", edittextcontact.getText().toString()).apply();
+        sp1.edit().putString("range", edittextrange.getText().toString()).apply();
+        sp1.edit().putString("img", downloadURL).apply();
+        sp1.edit().putString("lat", String.valueOf(lat)).apply();
+        sp1.edit().putString("lng", String.valueOf(lng)).apply();
     }
-
 
     private void _setLoc(final double _latitude, final double _longitude) {
         if (mapReady) {
@@ -514,68 +457,11 @@ public class EditdetailsActivity extends AppCompatActivity {
             wait = new TimerTask() {
                 @Override
                 public void run() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            _setLoc(_latitude, _longitude);
-                        }
-                    });
+                    runOnUiThread(() -> _setLoc(_latitude, _longitude));
                 }
             };
-            _timer.schedule(wait, (int) (1000));
+            _timer.schedule(wait, 1000);
         }
-    }
-
-
-    @Deprecated
-    public void showMessage(String _s) {
-        Toast.makeText(getApplicationContext(), _s, Toast.LENGTH_SHORT).show();
-    }
-
-    @Deprecated
-    public int getLocationX(View _v) {
-        int[] _location = new int[2];
-        _v.getLocationInWindow(_location);
-        return _location[0];
-    }
-
-    @Deprecated
-    public int getLocationY(View _v) {
-        int[] _location = new int[2];
-        _v.getLocationInWindow(_location);
-        return _location[1];
-    }
-
-    @Deprecated
-    public int getRandom(int _min, int _max) {
-        Random random = new Random();
-        return random.nextInt(_max - _min + 1) + _min;
-    }
-
-    @Deprecated
-    public ArrayList<Double> getCheckedItemPositionsToArray(ListView _list) {
-        ArrayList<Double> _result = new ArrayList<Double>();
-        SparseBooleanArray _arr = _list.getCheckedItemPositions();
-        for (int _iIdx = 0; _iIdx < _arr.size(); _iIdx++) {
-            if (_arr.valueAt(_iIdx))
-                _result.add((double) _arr.keyAt(_iIdx));
-        }
-        return _result;
-    }
-
-    @Deprecated
-    public float getDip(int _input) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _input, getResources().getDisplayMetrics());
-    }
-
-    @Deprecated
-    public int getDisplayWidthPixels() {
-        return getResources().getDisplayMetrics().widthPixels;
-    }
-
-    @Deprecated
-    public int getDisplayHeightPixels() {
-        return getResources().getDisplayMetrics().heightPixels;
     }
 
 }

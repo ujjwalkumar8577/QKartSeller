@@ -1,6 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -9,40 +7,40 @@
         android:id="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:background="#FFCCBC"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/textviewitemname"
-            android:focusable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:focusable="false"
             android:padding="8dp"
             android:text="TextView"
-            android:textSize="12sp"
-            android:textStyle="bold"
             android:textColor="#000000"
-            android:layout_weight="1" />
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textview3"
-            android:focusable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:focusable="false"
             android:padding="8dp"
             android:text="Rs."
-            android:textSize="12sp"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/textviewitemprice"
-            android:focusable="false"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:focusable="false"
             android:padding="8dp"
             android:text="0"
-            android:textSize="12sp"
-            android:textColor="#000000" />
+            android:textColor="#000000"
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>

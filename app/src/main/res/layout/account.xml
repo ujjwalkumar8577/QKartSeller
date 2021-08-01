@@ -1,6 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -17,16 +15,16 @@
             android:id="@+id/lineartitle"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:padding="5dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/imageviewback"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_arrow_back_white"
-                android:scaleType="center" />
+                android:scaleType="center"
+                android:src="@drawable/ic_arrow_back_white" />
 
             <TextView
                 android:id="@+id/textview5"
@@ -34,9 +32,9 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="Profile"
+                android:textColor="#FFFFFF"
                 android:textSize="25sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF" />
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -44,19 +42,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:padding="15dp"
+            android:alpha="0.9"
             android:background="#FFFFFF"
             android:gravity="center_horizontal|center_vertical"
             android:orientation="vertical"
-            android:alpha="0.9">
+            android:padding="15dp">
 
             <ImageView
                 android:id="@+id/imageviewprofile"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/shop"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/shop" />
 
             <TextView
                 android:id="@+id/textviewname"
@@ -68,9 +66,9 @@
                 android:layout_marginBottom="10dp"
                 android:padding="8dp"
                 android:text="Name"
+                android:textColor="#212121"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#212121" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textviewcontact"
@@ -79,9 +77,9 @@
                 android:layout_margin="5dp"
                 android:padding="8dp"
                 android:text="Contact"
+                android:textColor="#212121"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#212121" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textviewemail"
@@ -90,37 +88,37 @@
                 android:layout_margin="5dp"
                 android:padding="8dp"
                 android:text="Email"
+                android:textColor="#212121"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#212121" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textviewaddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:lines="3"
                 android:padding="8dp"
                 android:text="Address"
-                android:textSize="14sp"
-                android:textStyle="bold"
                 android:textColor="#212121"
-                android:lines="3" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearedit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:gravity="center_horizontal|center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/imageviewedit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_mode_edit_black"
-                android:scaleType="center" />
+                android:scaleType="center"
+                android:src="@drawable/ic_mode_edit_black" />
 
             <TextView
                 android:id="@+id/textviewedit"
@@ -128,9 +126,9 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="Edit details"
+                android:textColor="#000000"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
         </LinearLayout>
 
         <TextView
@@ -140,8 +138,8 @@
             android:layout_marginTop="30dp"
             android:padding="8dp"
             android:text="Sign out"
+            android:textColor="#FF1744"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="#FF1744" />
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

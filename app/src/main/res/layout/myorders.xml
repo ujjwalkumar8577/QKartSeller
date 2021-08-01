@@ -1,6 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -17,16 +15,16 @@
             android:id="@+id/linear5"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:padding="5dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/imageviewback"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_arrow_back_white"
-                android:scaleType="center" />
+                android:scaleType="center"
+                android:src="@drawable/ic_arrow_back_white" />
 
             <TextView
                 android:id="@+id/textview5"
@@ -34,18 +32,18 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="Completed Orders"
+                android:textColor="#FFFFFF"
                 android:textSize="25sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF" />
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linear6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/textview17"
@@ -53,9 +51,9 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="Completed Orders"
+                android:textColor="#000000"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textviewstatus"
@@ -63,26 +61,26 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="Loading completed orders ... "
-                android:textSize="14sp"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:textSize="14sp" />
 
             <ListView
                 android:id="@+id/listview1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:choiceMode="none"
                 android:dividerHeight="2dp"
-                android:choiceMode="none" />
+                android:padding="8dp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linear8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:alpha="0.9"
             android:background="#FF1744"
             android:orientation="horizontal"
-            android:alpha="0.9">
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/textview16"
@@ -90,9 +88,9 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="Total Amount            ₹"
+                android:textColor="#000000"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textviewamt"
@@ -100,9 +98,9 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="0"
+                android:textColor="#000000"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

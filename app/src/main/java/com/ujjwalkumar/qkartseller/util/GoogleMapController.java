@@ -10,12 +10,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
+
 // this class contains necessary functions for Google Maps operations
 public class GoogleMapController {
 
+    private final MapView mapView;
+    private final HashMap<String, Marker> mapMarker;
     private GoogleMap googleMap;
-    private MapView mapView;
-    private HashMap<String, Marker> mapMarker;
     private GoogleMap.OnMarkerClickListener onMarkerClickListener;
 
     public GoogleMapController(MapView mapView, OnMapReadyCallback onMapReadyCallback) {
@@ -25,16 +26,16 @@ public class GoogleMapController {
         this.mapView.getMapAsync(onMapReadyCallback);
     }
 
+    public GoogleMap getGoogleMap() {
+        return googleMap;
+    }
+
     public void setGoogleMap(GoogleMap googleMap) {
         this.googleMap = googleMap;
 
         if (onMarkerClickListener != null) {
             this.googleMap.setOnMarkerClickListener(onMarkerClickListener);
         }
-    }
-
-    public GoogleMap getGoogleMap() {
-        return googleMap;
     }
 
     public void setMapType(int _mapType) {

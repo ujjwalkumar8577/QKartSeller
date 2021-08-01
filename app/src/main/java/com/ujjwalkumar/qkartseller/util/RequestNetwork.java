@@ -2,24 +2,17 @@ package com.ujjwalkumar.qkartseller.util;
 
 import android.app.Activity;
 
-import com.ujjwalkumar.qkartseller.util.RequestNetworkController;
-
 import java.util.HashMap;
+
 // this class contains necessary functions for requesting response from network
 public class RequestNetwork {
+    private final Activity activity;
     private HashMap<String, Object> params = new HashMap<>();
     private HashMap<String, Object> headers = new HashMap<>();
-
-    private Activity activity;
-
     private int requestType = 0;
 
     public RequestNetwork(Activity activity) {
         this.activity = activity;
-    }
-
-    public void setHeaders(HashMap<String, Object> headers) {
-        this.headers = headers;
     }
 
     public void setParams(HashMap<String, Object> params, int requestType) {
@@ -33,6 +26,10 @@ public class RequestNetwork {
 
     public HashMap<String, Object> getHeaders() {
         return headers;
+    }
+
+    public void setHeaders(HashMap<String, Object> headers) {
+        this.headers = headers;
     }
 
     public Activity getActivity() {

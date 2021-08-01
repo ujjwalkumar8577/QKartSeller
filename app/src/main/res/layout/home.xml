@@ -1,6 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,36 +14,36 @@
             android:id="@+id/lineartitle"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:padding="5dp"
             android:gravity="center_horizontal|center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/textview1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:padding="8dp"
                 android:text="Dashboard"
-                android:textSize="25sp"
-                android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:layout_weight="1" />
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imageviewabout"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_info_outline_white"
-                android:scaleType="center" />
+                android:scaleType="center"
+                android:src="@drawable/ic_info_outline_white" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linear3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/textview2"
@@ -53,9 +51,9 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:text="Pending Orders"
+                android:textColor="#000000"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/linearloading"
@@ -63,11 +61,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:padding="8dp"
+                android:alpha="0.9"
                 android:background="@drawable/loading"
                 android:gravity="bottom"
                 android:orientation="vertical"
-                android:alpha="0.9">
+                android:padding="8dp">
 
                 <ImageView
                     android:id="@+id/imageviewcart"
@@ -76,10 +74,10 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="50dp"
-                    android:src="@drawable/ic_shopping_cart_white"
                     android:scaleType="center"
                     android:scaleX="2.0"
-                    android:scaleY="2.0" />
+                    android:scaleY="2.0"
+                    android:src="@drawable/ic_shopping_cart_white" />
 
                 <TextView
                     android:id="@+id/textviewstatus"
@@ -87,17 +85,17 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:text="Loading pending orders ... "
-                    android:textSize="14sp"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <ListView
                 android:id="@+id/listview1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:choiceMode="none"
                 android:dividerHeight="2dp"
-                android:choiceMode="none" />
+                android:padding="8dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -110,150 +108,150 @@
                 android:id="@+id/lineardash"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:padding="8dp"
+                android:layout_weight="1"
+                android:alpha="0.9"
                 android:background="#FF1744"
                 android:gravity="center_horizontal|center_vertical"
                 android:orientation="vertical"
-                android:alpha="0.9"
-                android:layout_weight="1">
+                android:padding="8dp">
 
                 <ImageView
                     android:id="@+id/imageview1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_insert_invitation_white"
-                    android:scaleType="center" />
+                    android:scaleType="center"
+                    android:src="@drawable/ic_insert_invitation_white" />
 
                 <TextView
                     android:id="@+id/textview3"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:padding="4dp"
                     android:gravity="center_horizontal"
+                    android:padding="4dp"
                     android:text="Dashboard"
+                    android:textColor="#000000"
                     android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearcomp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:padding="8dp"
+                android:layout_weight="1"
+                android:alpha="0.9"
                 android:background="#FFCCBC"
                 android:gravity="center_horizontal|center_vertical"
                 android:orientation="vertical"
-                android:alpha="0.9"
-                android:layout_weight="1">
+                android:padding="8dp">
 
                 <ImageView
                     android:id="@+id/imageview2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_insert_chart_white"
-                    android:scaleType="center" />
+                    android:scaleType="center"
+                    android:src="@drawable/ic_insert_chart_white" />
 
                 <TextView
                     android:id="@+id/textview4"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:padding="4dp"
                     android:gravity="center_horizontal"
+                    android:padding="4dp"
                     android:text="Orders"
+                    android:textColor="#000000"
                     android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearitems"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:padding="8dp"
+                android:layout_weight="1"
+                android:alpha="0.9"
                 android:background="#FFCCBC"
                 android:gravity="center_horizontal|center_vertical"
                 android:orientation="vertical"
-                android:alpha="0.9"
-                android:layout_weight="1">
+                android:padding="8dp">
 
                 <ImageView
                     android:id="@+id/imageview3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_more_white"
-                    android:scaleType="center" />
+                    android:scaleType="center"
+                    android:src="@drawable/ic_more_white" />
 
                 <TextView
                     android:id="@+id/textview5"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:padding="4dp"
                     android:gravity="center_horizontal"
+                    android:padding="4dp"
                     android:text="Items"
+                    android:textColor="#000000"
                     android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearhelp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:padding="8dp"
+                android:layout_weight="1"
+                android:alpha="0.9"
                 android:background="#FFCCBC"
                 android:gravity="center_horizontal|center_vertical"
                 android:orientation="vertical"
-                android:alpha="0.9"
-                android:layout_weight="1">
+                android:padding="8dp">
 
                 <ImageView
                     android:id="@+id/imageview6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_insert_comment_white"
-                    android:scaleType="center" />
+                    android:scaleType="center"
+                    android:src="@drawable/ic_insert_comment_white" />
 
                 <TextView
                     android:id="@+id/textview8"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:padding="4dp"
                     android:gravity="center_horizontal"
+                    android:padding="4dp"
                     android:text="Help"
+                    android:textColor="#000000"
                     android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearaccount"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:padding="8dp"
+                android:layout_weight="1"
+                android:alpha="0.9"
                 android:background="#FFCCBC"
                 android:gravity="center_horizontal|center_vertical"
                 android:orientation="vertical"
-                android:alpha="0.9"
-                android:layout_weight="1">
+                android:padding="8dp">
 
                 <ImageView
                     android:id="@+id/imageview4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_person_white"
-                    android:scaleType="center" />
+                    android:scaleType="center"
+                    android:src="@drawable/ic_person_white" />
 
                 <TextView
                     android:id="@+id/textview6"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:padding="4dp"
                     android:gravity="center_horizontal"
+                    android:padding="4dp"
                     android:text="Account"
+                    android:textColor="#000000"
                     android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
