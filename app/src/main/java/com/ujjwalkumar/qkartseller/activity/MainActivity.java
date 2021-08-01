@@ -1,4 +1,4 @@
-package com.ujjwalkumar.qkartseller;
+package com.ujjwalkumar.qkartseller.activity;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.ujjwalkumar.qkartseller.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
 
         anix.setTarget(layout);
         anix.setPropertyName("scaleX");
-        anix.setFloatValues(0.0f, 1.0f);
+        anix.setFloatValues(0, 1);
         anix.setInterpolator(new DecelerateInterpolator());
         anix.setDuration(500);
         aniy.setTarget(layout);
         aniy.setPropertyName("scaleY");
-        aniy.setFloatValues(0.0f, 1.0f);
+        aniy.setFloatValues(0, 1);
         aniy.setInterpolator(new DecelerateInterpolator());
         aniy.setDuration(500);
         anix.start();

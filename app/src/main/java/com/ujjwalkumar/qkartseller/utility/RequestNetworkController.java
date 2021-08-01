@@ -1,4 +1,4 @@
-package com.ujjwalkumar.qkartseller.util;
+package com.ujjwalkumar.qkartseller.utility;
 
 import com.google.gson.Gson;
 

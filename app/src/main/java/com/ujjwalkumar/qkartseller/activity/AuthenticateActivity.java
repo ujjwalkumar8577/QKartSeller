@@ -1,6 +1,5 @@
-package com.ujjwalkumar.qkartseller;
+package com.ujjwalkumar.qkartseller.activity;
 
-import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
@@ -15,18 +14,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.ujjwalkumar.qkartseller.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,45 +34,30 @@ import java.util.HashMap;
 public class AuthenticateActivity extends AppCompatActivity {
 
     private double t = 0;
-    private boolean isloginscreen = true;
     private double flag = 0;
     private ArrayList<HashMap<String, Object>> lmp = new ArrayList<>();
-    private LinearLayout linearlogin;
-    private LinearLayout linearsignup;
-    private LinearLayout linear14;
-    private TextView textviewforgot;
-    private LinearLayout linear19;
-    private LinearLayout linear20;
-    private EditText edittextle;
-    private EditText edittextlp;
-    private ImageView imageviewlogin;
-    private TextView textviewsignup;
-    private LinearLayout linear4;
-    private LinearLayout linear10;
-    private LinearLayout linear11;
-    private EditText edittextse;
-    private EditText edittextsp;
-    private ImageView imageviewsignup;
-    private TextView textviewlogin;
 
-    private final FirebaseDatabase _firebase = FirebaseDatabase.getInstance();
+    private LinearLayout linearlogin, linearsignup, linear14, linear19, linear20, linear4, linear10, linear11;
+    private TextView textviewforgot, textviewsignup, textviewlogin;
+    private EditText edittextle, edittextlp, edittextse, edittextsp;
+    private ImageView imageviewlogin, imageviewsignup;
+
+    private final FirebaseDatabase firebase = FirebaseDatabase.getInstance();
     private final Intent ina = new Intent();
     private final ObjectAnimator anix = new ObjectAnimator();
     private final ObjectAnimator aniy = new ObjectAnimator();
-    private final DatabaseReference db1 = _firebase.getReference("sellers");
+    private final DatabaseReference db1 = firebase.getReference("sellers");
     private final ObjectAnimator ani = new ObjectAnimator();
     private FirebaseAuth auth;
-    private OnCompleteListener<AuthResult> _auth_create_user_listener;
-    private OnCompleteListener<AuthResult> _auth_sign_in_listener;
-    private OnCompleteListener<Void> _auth_reset_password_listener;
-    private ChildEventListener _db1_child_listener;
+    private OnCompleteListener<AuthResult> auth_create_user_listener;
+    private OnCompleteListener<AuthResult> auth_sign_in_listener;
+    private OnCompleteListener<Void> auth_reset_password_listener;
     private SharedPreferences sp1;
 
     @Override
     protected void onCreate(Bundle _savedInstanceState) {
         super.onCreate(_savedInstanceState);
         setContentView(R.layout.authenticate);
-        com.google.firebase.FirebaseApp.initializeApp(this);
 
         linearlogin = findViewById(R.id.linearlogin);
         linearsignup = findViewById(R.id.linearsignup);
@@ -91,18 +76,19 @@ public class AuthenticateActivity extends AppCompatActivity {
         edittextsp = findViewById(R.id.edittextsp);
         imageviewsignup = findViewById(R.id.imageviewsignup);
         textviewlogin = findViewById(R.id.textviewlogin);
+
         auth = FirebaseAuth.getInstance();
         sp1 = getSharedPreferences("info", Activity.MODE_PRIVATE);
 
-        textviewforgot.setOnClickListener(_view -> {
+        textviewforgot.setOnClickListener(view -> {
             if (edittextle.getText().toString().equals("")) {
                 Toast.makeText(this, "Enter your email", Toast.LENGTH_SHORT).show();
             } else {
-                auth.sendPasswordResetEmail(edittextle.getText().toString()).addOnCompleteListener(_auth_reset_password_listener);
+                auth.sendPasswordResetEmail(edittextle.getText().toString()).addOnCompleteListener(auth_reset_password_listener);
             }
         });
 
-        imageviewlogin.setOnClickListener(_view -> {
+        imageviewlogin.setOnClickListener(view -> {
             if (!edittextle.getText().toString().equals("")) {
                 if (!edittextlp.getText().toString().equals("")) {
                     imageviewlogin.setImageResource(R.drawable.ic_rotate_right_black);
@@ -114,7 +100,7 @@ public class AuthenticateActivity extends AppCompatActivity {
                     ani.start();
                     sp1.edit().putString("email", edittextle.getText().toString()).apply();
                     sp1.edit().putString("password", edittextlp.getText().toString()).apply();
-                    auth.signInWithEmailAndPassword(edittextle.getText().toString(), edittextlp.getText().toString()).addOnCompleteListener(AuthenticateActivity.this, _auth_sign_in_listener);
+                    auth.signInWithEmailAndPassword(edittextle.getText().toString(), edittextlp.getText().toString()).addOnCompleteListener(AuthenticateActivity.this, auth_sign_in_listener);
                 } else {
                     Toast.makeText(this, "Enter password", Toast.LENGTH_SHORT).show();
                 }
@@ -123,24 +109,23 @@ public class AuthenticateActivity extends AppCompatActivity {
             }
         });
 
-        textviewsignup.setOnClickListener(_view -> {
-            isloginscreen = false;
+        textviewsignup.setOnClickListener(view -> {
             linearsignup.setVisibility(View.VISIBLE);
-            linearlogin.setAlpha((float) (1));
-            linearsignup.setAlpha((float) (0));
+            linearlogin.setAlpha(1);
+            linearsignup.setAlpha(0);
             anix.setTarget(linearsignup);
             anix.setPropertyName("alpha");
-            anix.setFloatValues((float) (0), (float) (1));
+            anix.setFloatValues(0, 1);
             anix.setDuration(500);
             aniy.setTarget(linearlogin);
             aniy.setPropertyName("alpha");
-            aniy.setFloatValues((float) (1), (float) (0));
+            aniy.setFloatValues(1, 0);
             aniy.setDuration(500);
             anix.start();
             aniy.start();
         });
 
-        imageviewsignup.setOnClickListener(_view -> {
+        imageviewsignup.setOnClickListener(view -> {
             if (!edittextse.getText().toString().equals("")) {
                 if (!edittextsp.getText().toString().equals("")) {
                     imageviewsignup.setImageResource(R.drawable.ic_rotate_right_black);
@@ -152,7 +137,7 @@ public class AuthenticateActivity extends AppCompatActivity {
                     ani.start();
                     sp1.edit().putString("email", edittextse.getText().toString()).apply();
                     sp1.edit().putString("password", edittextsp.getText().toString()).apply();
-                    auth.createUserWithEmailAndPassword(edittextse.getText().toString(), edittextsp.getText().toString()).addOnCompleteListener(AuthenticateActivity.this, _auth_create_user_listener);
+                    auth.createUserWithEmailAndPassword(edittextse.getText().toString(), edittextsp.getText().toString()).addOnCompleteListener(AuthenticateActivity.this, auth_create_user_listener);
                 } else {
                     Toast.makeText(this, "Enter password", Toast.LENGTH_SHORT).show();
                 }
@@ -161,8 +146,7 @@ public class AuthenticateActivity extends AppCompatActivity {
             }
         });
 
-        textviewlogin.setOnClickListener(_view -> {
-            isloginscreen = true;
+        textviewlogin.setOnClickListener(view -> {
             linearlogin.setVisibility(View.VISIBLE);
             linearsignup.setAlpha((float) (1));
             linearlogin.setAlpha((float) (0));
@@ -178,130 +162,40 @@ public class AuthenticateActivity extends AppCompatActivity {
             aniy.start();
         });
 
-        anix.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator _param1) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator _param1) {
-                if (!isloginscreen) {
-                    linearlogin.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onAnimationCancel(Animator _param1) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator _param1) {
-
-            }
-        });
-
-        aniy.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator _param1) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator _param1) {
-                if (isloginscreen) {
-                    linearsignup.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onAnimationCancel(Animator _param1) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator _param1) {
-
-            }
-        });
-
-        _db1_child_listener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot _param1, String _param2) {
-                GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {
-                };
-                final String _childKey = _param1.getKey();
-                final HashMap<String, Object> _childValue = _param1.getValue(_ind);
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot _param1, String _param2) {
-                GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {
-                };
-                final String _childKey = _param1.getKey();
-                final HashMap<String, Object> _childValue = _param1.getValue(_ind);
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot _param1, String _param2) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot _param1) {
-                GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {
-                };
-                final String _childKey = _param1.getKey();
-                final HashMap<String, Object> _childValue = _param1.getValue(_ind);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError _param1) {
-                final int _errorCode = _param1.getCode();
-                final String _errorMessage = _param1.getMessage();
-
-            }
-        };
-        db1.addChildEventListener(_db1_child_listener);
-
-        _auth_create_user_listener = _param1 -> {
-            final boolean _success = _param1.isSuccessful();
-            final String _errorMessage = _param1.getException() != null ? _param1.getException().getMessage() : "";
+        auth_create_user_listener = param1 -> {
+            final boolean _success = param1.isSuccessful();
+            final String errorMessage = param1.getException() != null ? param1.getException().getMessage() : "";
             ani.cancel();
             imageviewsignup.setRotation((float) (0));
             imageviewsignup.setImageResource(R.drawable.ic_arrow_forward_black);
             if (_success) {
                 ina.setAction(Intent.ACTION_VIEW);
-                ina.setClass(getApplicationContext(), EditdetailsActivity.class);
+                ina.setClass(getApplicationContext(), EditDetailsActivity.class);
                 ina.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(ina);
                 finish();
             } else {
-                Toast.makeText(this, _errorMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
             }
         };
 
-        _auth_sign_in_listener = _param1 -> {
-            final boolean _success = _param1.isSuccessful();
-            final String _errorMessage = _param1.getException() != null ? _param1.getException().getMessage() : "";
+        auth_sign_in_listener = param1 -> {
+            final boolean _success = param1.isSuccessful();
+            final String errorMessage = param1.getException() != null ? param1.getException().getMessage() : "";
             if (_success) {
-                db1.addListenerForSingleValueEvent(new ValueEventListener() {
+                db1.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot _dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
                         lmp = new ArrayList<>();
                         try {
                             GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {
                             };
-                            for (DataSnapshot _data : _dataSnapshot.getChildren()) {
-                                HashMap<String, Object> _map = _data.getValue(_ind);
+                            for (DataSnapshot data : snapshot.getChildren()) {
+                                HashMap<String, Object> _map = data.getValue(_ind);
                                 lmp.add(_map);
                             }
-                        } catch (Exception _e) {
-                            _e.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                         t = 0;
                         flag = -1;
@@ -334,19 +228,20 @@ public class AuthenticateActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError _databaseError) {
+                    public void onCancelled(@NonNull DatabaseError error) {
+
                     }
                 });
             } else {
-                Toast.makeText(this, _errorMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
             }
             ani.cancel();
             imageviewlogin.setRotation((float) (0));
             imageviewlogin.setImageResource(R.drawable.ic_arrow_forward_black);
         };
 
-        _auth_reset_password_listener = _param1 -> {
-            final boolean _success = _param1.isSuccessful();
+        auth_reset_password_listener = param1 -> {
+            final boolean _success = param1.isSuccessful();
             if (_success) {
                 Toast.makeText(this, "Password reset mail sent.", Toast.LENGTH_SHORT).show();
             }
@@ -355,7 +250,7 @@ public class AuthenticateActivity extends AppCompatActivity {
         if ((FirebaseAuth.getInstance().getCurrentUser() != null)) {
             if (sp1.getString("name", "").equals("")) {
                 ina.setAction(Intent.ACTION_VIEW);
-                ina.setClass(getApplicationContext(), EditdetailsActivity.class);
+                ina.setClass(getApplicationContext(), EditDetailsActivity.class);
                 ina.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(ina);
                 finish();
@@ -393,27 +288,29 @@ public class AuthenticateActivity extends AppCompatActivity {
             linear11.setBackground(gd7);
             linearlogin.setVisibility(View.VISIBLE);
             linearsignup.setVisibility(View.GONE);
-            db1.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            db1.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot _dataSnapshot) {
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
                     lmp = new ArrayList<>();
                     try {
                         GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {
                         };
-                        for (DataSnapshot _data : _dataSnapshot.getChildren()) {
-                            HashMap<String, Object> _map = _data.getValue(_ind);
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            HashMap<String, Object> _map = data.getValue(_ind);
                             lmp.add(_map);
                         }
-                    } catch (Exception _e) {
-                        _e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
                 }
 
                 @Override
-                public void onCancelled(DatabaseError _databaseError) {
+                public void onCancelled(@NonNull DatabaseError error) {
+
                 }
             });
+
         }
     }
 

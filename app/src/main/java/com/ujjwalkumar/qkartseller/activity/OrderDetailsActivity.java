@@ -1,10 +1,11 @@
-package com.ujjwalkumar.qkartseller;
+package com.ujjwalkumar.qkartseller.activity;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,41 +25,31 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.maps.MapView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.ujjwalkumar.qkartseller.util.GoogleMapController;
+import com.ujjwalkumar.qkartseller.R;
+import com.ujjwalkumar.qkartseller.utility.GoogleMapController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class OrderdetailsActivity extends AppCompatActivity {
+public class OrderDetailsActivity extends AppCompatActivity {
 
     private final Intent ino = new Intent();
     private HashMap<String, Object> tmp = new HashMap<>();
     private double lat = 0;
     private double lng = 0;
     private ArrayList<HashMap<String, Object>> item = new ArrayList<>();
-    private ImageView imageviewback;
-    private TextView textviewname;
-    private TextView textviewaddress;
-    private ImageView imageviewcall;
-    private ImageView imageviewlocate;
+
+    private TextView textviewname, textviewaddress, textviewreview, textviewamt;
+    private ImageView imageviewback, imageviewcall, imageviewlocate, imageview1, imageview2, imageview3, imageview4;
     private MapView mapview1;
-    private GoogleMapController _mapview1_controller;
-    private LinearLayout linear11;
-    private LinearLayout linear12;
-    private LinearLayout linear13;
-    private ImageView imageview1;
-    private ImageView imageview2;
-    private ImageView imageview3;
-    private ImageView imageview4;
+    private GoogleMapController mapview1_controller;
+    private LinearLayout linear11, linear12, linear13;
     private ListView listview1;
-    private TextView textviewreview;
-    private TextView textviewamt;
 
     @Override
-    protected void onCreate(Bundle _savedInstanceState) {
-        super.onCreate(_savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.orderdetails);
-        com.google.firebase.FirebaseApp.initializeApp(this);
 
         imageviewback = findViewById(R.id.imageviewback);
         textviewname = findViewById(R.id.textviewname);
@@ -66,7 +57,7 @@ public class OrderdetailsActivity extends AppCompatActivity {
         imageviewcall = findViewById(R.id.imageviewcall);
         imageviewlocate = findViewById(R.id.imageviewlocate);
         mapview1 = findViewById(R.id.mapview1);
-        mapview1.onCreate(_savedInstanceState);
+        mapview1.onCreate(savedInstanceState);
         linear11 = findViewById(R.id.linear11);
         linear12 = findViewById(R.id.linear12);
         linear13 = findViewById(R.id.linear13);
@@ -78,37 +69,37 @@ public class OrderdetailsActivity extends AppCompatActivity {
         textviewreview = findViewById(R.id.textviewreview);
         textviewamt = findViewById(R.id.textviewamt);
 
-        imageviewback.setOnClickListener(_view -> finish());
+        imageviewback.setOnClickListener(view -> finish());
 
-        imageviewcall.setOnClickListener(_view -> {
+        imageviewcall.setOnClickListener(view -> {
             ino.setAction(Intent.ACTION_CALL);
             ino.setData(Uri.parse("tel:".concat(tmp.get("contact").toString())));
             startActivity(ino);
         });
 
-        imageviewlocate.setOnClickListener(_view -> {
+        imageviewlocate.setOnClickListener(view -> {
             ino.setAction(Intent.ACTION_VIEW);
             ino.setData(Uri.parse("google.navigation:q=".concat(tmp.get("lat").toString().concat(",".concat(tmp.get("lng").toString())))));
             startActivity(ino);
         });
 
-        _mapview1_controller = new GoogleMapController(mapview1, _googleMap -> {
-            _mapview1_controller.setGoogleMap(_googleMap);
-            _mapview1_controller.moveCamera(lat, lng);
-            _mapview1_controller.zoomTo(15);
-            _mapview1_controller.addMarker("id", lat, lng);
-            _mapview1_controller.setMarkerIcon("id", R.drawable.ic_location_on_black);
+        mapview1_controller = new GoogleMapController(mapview1, _googleMap -> {
+            mapview1_controller.setGoogleMap(_googleMap);
+            mapview1_controller.moveCamera(lat, lng);
+            mapview1_controller.zoomTo(15);
+            mapview1_controller.addMarker("id", lat, lng);
+            mapview1_controller.setMarkerIcon("id", R.drawable.ic_location_on_black);
         });
 
-        linear11.setOnClickListener(_view -> {
-
-        });
-
-        linear12.setOnClickListener(_view -> {
+        linear11.setOnClickListener(view -> {
 
         });
 
-        linear13.setOnClickListener(_view -> {
+        linear12.setOnClickListener(view -> {
+
+        });
+
+        linear13.setOnClickListener(view -> {
 
         });
 
@@ -128,10 +119,8 @@ public class OrderdetailsActivity extends AppCompatActivity {
     }
 
     private void initializeLogic() {
-        tmp = new Gson().fromJson(getIntent().getStringExtra("map"), new TypeToken<HashMap<String, Object>>() {
-        }.getType());
-        item = new Gson().fromJson(tmp.get("itemmap").toString(), new TypeToken<ArrayList<HashMap<String, Object>>>() {
-        }.getType());
+        tmp = new Gson().fromJson(getIntent().getStringExtra("map"), new TypeToken<HashMap<String, Object>>() {}.getType());
+        item = new Gson().fromJson(tmp.get("itemmap").toString(), new TypeToken<ArrayList<HashMap<String, Object>>>() {}.getType());
         lat = Double.parseDouble(tmp.get("lat").toString());
         lng = Double.parseDouble(tmp.get("lng").toString());
         textviewname.setText(tmp.get("name").toString());
@@ -189,52 +178,49 @@ public class OrderdetailsActivity extends AppCompatActivity {
     }
 
     public class Listview1Adapter extends BaseAdapter {
-        ArrayList<HashMap<String, Object>> _data;
+        ArrayList<HashMap<String, Object>> data;
 
-        public Listview1Adapter(ArrayList<HashMap<String, Object>> _arr) {
-            _data = _arr;
+        public Listview1Adapter(ArrayList<HashMap<String, Object>> arr) {
+            data = arr;
         }
 
         @Override
         public int getCount() {
-            return _data.size();
+            return data.size();
         }
 
         @Override
-        public HashMap<String, Object> getItem(int _index) {
-            return _data.get(_index);
+        public HashMap<String, Object> getItem(int index) {
+            return data.get(index);
         }
 
         @Override
-        public long getItemId(int _index) {
-            return _index;
+        public long getItemId(int index) {
+            return index;
         }
 
         @Override
-        public View getView(final int _position, View _view, ViewGroup _viewGroup) {
-            LayoutInflater _inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View _v = _view;
-            if (_v == null) {
-                _v = _inflater.inflate(R.layout.manageitm, null);
+        public View getView(final int _position, View view, ViewGroup viewGroup) {
+            LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View v = view;
+            if (v == null) {
+                v = inflater.inflate(R.layout.adaptermanageitems, null);
             }
 
-            final LinearLayout linearout = _v.findViewById(R.id.linearout);
-            final LinearLayout linear1 = _v.findViewById(R.id.linear1);
-            final LinearLayout linear5 = _v.findViewById(R.id.linear5);
-            final LinearLayout linear3 = _v.findViewById(R.id.linear3);
-            final TextView textviewitemname = _v.findViewById(R.id.textviewitemname);
-            final TextView textviewqty = _v.findViewById(R.id.textviewqty);
-            final TextView textview2 = _v.findViewById(R.id.textview2);
-            final TextView textviewitemprice = _v.findViewById(R.id.textviewitemprice);
-            final TextView textviewitemmrp = _v.findViewById(R.id.textviewitemmrp);
-            final Switch switch1 = _v.findViewById(R.id.switch1);
-            final ImageView imageviewdeleteitem = _v.findViewById(R.id.imageviewdeleteitem);
-            final TextView textviewitemdetail = _v.findViewById(R.id.textviewitemdetail);
+            final LinearLayout linearout = v.findViewById(R.id.linearout);
+            final TextView textviewitemname = v.findViewById(R.id.textviewitemname);
+            final TextView textviewqty = v.findViewById(R.id.textviewqty);
+            final TextView textviewitemprice = v.findViewById(R.id.textviewitemprice);
+            final TextView textviewitemmrp = v.findViewById(R.id.textviewitemmrp);
+            final Switch switch1 = v.findViewById(R.id.switch1);
+            final ImageView imageviewdeleteitem = v.findViewById(R.id.imageviewdeleteitem);
+            final TextView textviewitemdetail = v.findViewById(R.id.textviewitemdetail);
 
-            android.graphics.drawable.GradientDrawable gd1 = new android.graphics.drawable.GradientDrawable();
+            GradientDrawable gd1 = new GradientDrawable();
             gd1.setColor(Color.parseColor("#FFCCBC"));
             gd1.setCornerRadius(30);
             linearout.setBackground(gd1);
+
             imageviewdeleteitem.setVisibility(View.GONE);
             switch1.setVisibility(View.GONE);
             textviewitemmrp.setVisibility(View.INVISIBLE);
@@ -243,7 +229,7 @@ public class OrderdetailsActivity extends AppCompatActivity {
             textviewitemdetail.setText(item.get(_position).get("detail").toString());
             textviewqty.setText(item.get(_position).get("qty").toString());
 
-            return _v;
+            return v;
         }
     }
 

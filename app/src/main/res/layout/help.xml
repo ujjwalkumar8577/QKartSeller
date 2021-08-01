@@ -60,6 +60,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:hint="Mention your issue or suggestion here. "
+                    android:inputType="textLongMessage"
                     android:imeOptions="actionSend"
                     android:lines="15"
                     android:padding="8dp"

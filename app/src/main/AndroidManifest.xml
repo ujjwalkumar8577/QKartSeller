@@ -15,7 +15,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -25,39 +25,39 @@
         </activity>
 
         <activity
-            android:name=".AuthenticateActivity"
+            android:name=".activity.AuthenticateActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".EditdetailsActivity"
+            android:name=".activity.EditDetailsActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".activity.HomeActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AccountActivity"
+            android:name=".activity.AccountActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AboutActivity"
+            android:name=".activity.AboutActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OrderdetailsActivity"
+            android:name=".activity.OrderDetailsActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ManageitemsActivity"
+            android:name=".activity.ManageItemsActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MyordersActivity"
+            android:name=".activity.OrdersActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".HelpActivity"
+            android:name=".activity.HelpActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
 

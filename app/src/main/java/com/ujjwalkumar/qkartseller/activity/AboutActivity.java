@@ -1,11 +1,14 @@
-package com.ujjwalkumar.qkartseller;
+package com.ujjwalkumar.qkartseller.activity;
 
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.ujjwalkumar.qkartseller.R;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -13,17 +16,16 @@ public class AboutActivity extends AppCompatActivity {
     private LinearLayout linear2;
 
     @Override
-    protected void onCreate(Bundle _savedInstanceState) {
-        super.onCreate(_savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
-        com.google.firebase.FirebaseApp.initializeApp(this);
 
         imageviewback = findViewById(R.id.imageviewback);
         linear2 = findViewById(R.id.linear2);
 
-        imageviewback.setOnClickListener(_view -> finish());
+        imageviewback.setOnClickListener(view -> finish());
 
-        android.graphics.drawable.GradientDrawable gd1 = new android.graphics.drawable.GradientDrawable();
+        GradientDrawable gd1 = new GradientDrawable();
         gd1.setColor(Color.parseColor("#FFCCBC"));
         gd1.setCornerRadius(30);
         linear2.setBackground(gd1);

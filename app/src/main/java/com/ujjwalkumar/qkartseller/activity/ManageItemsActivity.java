@@ -1,4 +1,4 @@
-package com.ujjwalkumar.qkartseller;
+package com.ujjwalkumar.qkartseller.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,55 +22,45 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.ujjwalkumar.qkartseller.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ManageitemsActivity extends AppCompatActivity {
+public class ManageItemsActivity extends AppCompatActivity {
 
     private final ArrayList<HashMap<String, Object>> filtered = new ArrayList<>();
-    private final FirebaseDatabase _firebase = FirebaseDatabase.getInstance();
-    private final DatabaseReference db4 = _firebase.getReference("items");
     private double t = 0;
     private double u = 0;
     private HashMap<String, Object> mp = new HashMap<>();
     private HashMap<String, Object> tmp = new HashMap<>();
     private HashMap<String, Object> toset = new HashMap<>();
     private ArrayList<HashMap<String, Object>> lmpitems = new ArrayList<>();
+
     private ImageView imageviewback;
     private ListView listview1;
-    private EditText edittext1;
-    private EditText edittext2;
-    private EditText edittext3;
-    private EditText edittext4;
+    private EditText edittext1, edittext2, edittext3, edittext4;
     private CheckBox checkbox1;
-    private Button buttonclear;
-    private Button buttonadd;
-    private FirebaseAuth auth;
-    private OnCompleteListener<AuthResult> _auth_create_user_listener;
-    private OnCompleteListener<AuthResult> _auth_sign_in_listener;
-    private OnCompleteListener<Void> _auth_reset_password_listener;
-    private ChildEventListener _db4_child_listener;
+    private Button buttonclear, buttonadd;
+
+    private final FirebaseDatabase firebase = FirebaseDatabase.getInstance();
+    private final DatabaseReference db4 = firebase.getReference("items");
     private SharedPreferences sp1;
     private AlertDialog.Builder confirm;
 
     @Override
-    protected void onCreate(Bundle _savedInstanceState) {
-        super.onCreate(_savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.manageitems);
-        com.google.firebase.FirebaseApp.initializeApp(this);
 
         imageviewback = findViewById(R.id.imageviewback);
         listview1 = findViewById(R.id.listview1);
@@ -80,20 +71,19 @@ public class ManageitemsActivity extends AppCompatActivity {
         checkbox1 = findViewById(R.id.checkbox1);
         buttonclear = findViewById(R.id.buttonclear);
         buttonadd = findViewById(R.id.buttonadd);
-        auth = FirebaseAuth.getInstance();
+
         sp1 = getSharedPreferences("info", Activity.MODE_PRIVATE);
         confirm = new AlertDialog.Builder(this);
 
-        imageviewback.setOnClickListener(_view -> finish());
+        imageviewback.setOnClickListener(view -> finish());
 
-        checkbox1.setOnCheckedChangeListener((_param1, _param2) -> {
-            final boolean _isChecked = _param2;
-            if (_isChecked) {
+        checkbox1.setOnCheckedChangeListener((param1, param2) -> {
+            if (param2) {
                 edittext3.setText(edittext4.getText().toString());
             }
         });
 
-        buttonclear.setOnClickListener(_view -> {
+        buttonclear.setOnClickListener(view -> {
             edittext1.setText("");
             edittext2.setText("");
             edittext3.setText("");
@@ -101,7 +91,7 @@ public class ManageitemsActivity extends AppCompatActivity {
             checkbox1.setChecked(false);
         });
 
-        buttonadd.setOnClickListener(_view -> {
+        buttonadd.setOnClickListener(view -> {
             if (!edittext1.getText().toString().equals("")) {
                 if (!edittext2.getText().toString().equals("")) {
                     if (!edittext4.getText().toString().equals("")) {
@@ -142,82 +132,22 @@ public class ManageitemsActivity extends AppCompatActivity {
             }
         });
 
-        _db4_child_listener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot _param1, String _param2) {
-                GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {
-                };
-                final String _childKey = _param1.getKey();
-                final HashMap<String, Object> _childValue = _param1.getValue(_ind);
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot _param1, String _param2) {
-                GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {
-                };
-                final String _childKey = _param1.getKey();
-                final HashMap<String, Object> _childValue = _param1.getValue(_ind);
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot _param1, String _param2) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot _param1) {
-                GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {
-                };
-                final String _childKey = _param1.getKey();
-                final HashMap<String, Object> _childValue = _param1.getValue(_ind);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError _param1) {
-                final int _errorCode = _param1.getCode();
-                final String _errorMessage = _param1.getMessage();
-
-            }
-        };
-        db4.addChildEventListener(_db4_child_listener);
-
-        _auth_create_user_listener = _param1 -> {
-            final boolean _success = _param1.isSuccessful();
-            final String _errorMessage = _param1.getException() != null ? _param1.getException().getMessage() : "";
-
-        };
-
-        _auth_sign_in_listener = _param1 -> {
-            final boolean _success = _param1.isSuccessful();
-            final String _errorMessage = _param1.getException() != null ? _param1.getException().getMessage() : "";
-
-        };
-
-        _auth_reset_password_listener = _param1 -> {
-            final boolean _success = _param1.isSuccessful();
-
-        };
-
-        _loadlist();
+        loadlist();
     }
 
-    private void _loadlist() {
-        db4.addListenerForSingleValueEvent(new ValueEventListener() {
+    private void loadlist() {
+        db4.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot _dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 lmpitems = new ArrayList<>();
                 try {
-                    GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {
-                    };
-                    for (DataSnapshot _data : _dataSnapshot.getChildren()) {
-                        HashMap<String, Object> _map = _data.getValue(_ind);
-                        lmpitems.add(_map);
+                    GenericTypeIndicator<HashMap<String, Object>> ind = new GenericTypeIndicator<HashMap<String, Object>>() {};
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        HashMap<String, Object> map = data.getValue(ind);
+                        lmpitems.add(map);
                     }
-                } catch (Exception _e) {
-                    _e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 t = 0;
                 u = 0;
@@ -225,8 +155,6 @@ public class ManageitemsActivity extends AppCompatActivity {
                     if (lmpitems.get((int) t).get("sellerid").toString().equals(sp1.getString("uid", ""))) {
                         tmp = lmpitems.get((int) t);
                         filtered.add(tmp);
-                    } else {
-
                     }
                     t++;
                 }
@@ -234,12 +162,13 @@ public class ManageitemsActivity extends AppCompatActivity {
                     listview1.setAdapter(new Listview1Adapter(filtered));
                     ((BaseAdapter) listview1.getAdapter()).notifyDataSetChanged();
                 } else {
-                    Toast.makeText(ManageitemsActivity.this, "No items found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ManageItemsActivity.this, "No items found", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError _databaseError) {
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
@@ -252,52 +181,49 @@ public class ManageitemsActivity extends AppCompatActivity {
     }
 
     public class Listview1Adapter extends BaseAdapter {
-        ArrayList<HashMap<String, Object>> _data;
+        ArrayList<HashMap<String, Object>> data;
 
-        public Listview1Adapter(ArrayList<HashMap<String, Object>> _arr) {
-            _data = _arr;
+        public Listview1Adapter(ArrayList<HashMap<String, Object>> arr) {
+            data = arr;
         }
 
         @Override
         public int getCount() {
-            return _data.size();
+            return data.size();
         }
 
         @Override
-        public HashMap<String, Object> getItem(int _index) {
-            return _data.get(_index);
+        public HashMap<String, Object> getItem(int index) {
+            return data.get(index);
         }
 
         @Override
-        public long getItemId(int _index) {
-            return _index;
+        public long getItemId(int index) {
+            return index;
         }
 
         @Override
-        public View getView(final int _position, View _view, ViewGroup _viewGroup) {
-            LayoutInflater _inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View _v = _view;
-            if (_v == null) {
-                _v = _inflater.inflate(R.layout.manageitm, null);
+        public View getView(final int _position, View view, ViewGroup viewGroup) {
+            LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View v = view;
+            if (v == null) {
+                v = inflater.inflate(R.layout.adaptermanageitems, null);
             }
 
-            final LinearLayout linearout = _v.findViewById(R.id.linearout);
-            final LinearLayout linear1 = _v.findViewById(R.id.linear1);
-            final LinearLayout linear5 = _v.findViewById(R.id.linear5);
-            final LinearLayout linear3 = _v.findViewById(R.id.linear3);
-            final TextView textviewitemname = _v.findViewById(R.id.textviewitemname);
-            final TextView textviewqty = _v.findViewById(R.id.textviewqty);
-            final TextView textview2 = _v.findViewById(R.id.textview2);
-            final TextView textviewitemprice = _v.findViewById(R.id.textviewitemprice);
-            final TextView textviewitemmrp = _v.findViewById(R.id.textviewitemmrp);
-            final Switch switch1 = _v.findViewById(R.id.switch1);
-            final ImageView imageviewdeleteitem = _v.findViewById(R.id.imageviewdeleteitem);
-            final TextView textviewitemdetail = _v.findViewById(R.id.textviewitemdetail);
+            final LinearLayout linearout = v.findViewById(R.id.linearout);
+            final TextView textviewitemname = v.findViewById(R.id.textviewitemname);
+            final TextView textviewqty = v.findViewById(R.id.textviewqty);
+            final TextView textviewitemprice = v.findViewById(R.id.textviewitemprice);
+            final TextView textviewitemmrp = v.findViewById(R.id.textviewitemmrp);
+            final Switch switch1 = v.findViewById(R.id.switch1);
+            final ImageView imageviewdeleteitem = v.findViewById(R.id.imageviewdeleteitem);
+            final TextView textviewitemdetail = v.findViewById(R.id.textviewitemdetail);
 
-            android.graphics.drawable.GradientDrawable gd1 = new android.graphics.drawable.GradientDrawable();
+            GradientDrawable gd1 = new GradientDrawable();
             gd1.setColor(Color.parseColor("#FFCCBC"));
             gd1.setCornerRadius(30);
             linearout.setBackground(gd1);
+
             textviewqty.setVisibility(View.GONE);
             textviewitemname.setText(filtered.get(_position).get("name").toString());
             textviewitemprice.setText(filtered.get(_position).get("price").toString());
@@ -305,7 +231,8 @@ public class ManageitemsActivity extends AppCompatActivity {
             textviewitemmrp.setText(filtered.get(_position).get("mrp").toString());
             textviewitemmrp.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             switch1.setChecked(filtered.get(_position).get("status").toString().equals("1"));
-            imageviewdeleteitem.setOnClickListener(_view12 -> {
+
+            imageviewdeleteitem.setOnClickListener(view12 -> {
                 confirm.setTitle("Delete");
                 confirm.setMessage("Do you want to delete ".concat(filtered.get(_position).get("name").toString().concat(" ?")));
                 confirm.setPositiveButton("Yes", (_dialog, _which) -> _delete(_position));
@@ -314,7 +241,7 @@ public class ManageitemsActivity extends AppCompatActivity {
                 });
                 confirm.create().show();
             });
-            switch1.setOnClickListener(_view1 -> {
+            switch1.setOnClickListener(view1 -> {
                 if (filtered.get(_position).get("status").toString().equals("1")) {
                     toset = filtered.get(_position);
                     toset.put("status", "0");
@@ -328,7 +255,7 @@ public class ManageitemsActivity extends AppCompatActivity {
                 }
             });
 
-            return _v;
+            return v;
         }
     }
 
