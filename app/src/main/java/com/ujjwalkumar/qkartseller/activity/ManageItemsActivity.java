@@ -38,13 +38,9 @@ import java.util.HashMap;
 
 public class ManageItemsActivity extends AppCompatActivity {
 
-    private final ArrayList<HashMap<String, Object>> filtered = new ArrayList<>();
-    private double t = 0;
-    private double u = 0;
     private HashMap<String, Object> mp = new HashMap<>();
-    private HashMap<String, Object> tmp = new HashMap<>();
     private HashMap<String, Object> toset = new HashMap<>();
-    private ArrayList<HashMap<String, Object>> lmpitems = new ArrayList<>();
+    private ArrayList<HashMap<String, Object>> filtered = new ArrayList<>();
 
     private ImageView imageviewback;
     private ListView listview1;
@@ -106,9 +102,6 @@ public class ManageItemsActivity extends AppCompatActivity {
                                 mp.put("price", edittext3.getText().toString());
                                 mp.put("status", "1");
                                 db4.child(mp.get("id").toString()).updateChildren(mp);
-                                filtered.add(mp);
-                                listview1.setAdapter(new Listview1Adapter(filtered));
-                                ((BaseAdapter) listview1.getAdapter()).notifyDataSetChanged();
                                 edittext1.setText("");
                                 edittext2.setText("");
                                 edittext3.setText("");
@@ -139,25 +132,19 @@ public class ManageItemsActivity extends AppCompatActivity {
         db4.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                lmpitems = new ArrayList<>();
+                filtered = new ArrayList<>();
                 try {
                     GenericTypeIndicator<HashMap<String, Object>> ind = new GenericTypeIndicator<HashMap<String, Object>>() {};
                     for (DataSnapshot data : snapshot.getChildren()) {
                         HashMap<String, Object> map = data.getValue(ind);
-                        lmpitems.add(map);
+                        if (map.get("sellerid").toString().equals(sp1.getString("uid", ""))) {
+                            filtered.add(map);
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                t = 0;
-                u = 0;
-                for (int _repeat146 = 0; _repeat146 < lmpitems.size(); _repeat146++) {
-                    if (lmpitems.get((int) t).get("sellerid").toString().equals(sp1.getString("uid", ""))) {
-                        tmp = lmpitems.get((int) t);
-                        filtered.add(tmp);
-                    }
-                    t++;
-                }
+
                 if (filtered.size() > 0) {
                     listview1.setAdapter(new Listview1Adapter(filtered));
                     ((BaseAdapter) listview1.getAdapter()).notifyDataSetChanged();
@@ -203,7 +190,7 @@ public class ManageItemsActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(final int _position, View view, ViewGroup viewGroup) {
+        public View getView(final int position, View view, ViewGroup viewGroup) {
             LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = view;
             if (v == null) {
@@ -225,33 +212,33 @@ public class ManageItemsActivity extends AppCompatActivity {
             linearout.setBackground(gd1);
 
             textviewqty.setVisibility(View.GONE);
-            textviewitemname.setText(filtered.get(_position).get("name").toString());
-            textviewitemprice.setText(filtered.get(_position).get("price").toString());
-            textviewitemdetail.setText(filtered.get(_position).get("detail").toString());
-            textviewitemmrp.setText(filtered.get(_position).get("mrp").toString());
+            textviewitemname.setText(filtered.get(position).get("name").toString());
+            textviewitemprice.setText(filtered.get(position).get("price").toString());
+            textviewitemdetail.setText(filtered.get(position).get("detail").toString());
+            textviewitemmrp.setText(filtered.get(position).get("mrp").toString());
             textviewitemmrp.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-            switch1.setChecked(filtered.get(_position).get("status").toString().equals("1"));
+            switch1.setChecked(filtered.get(position).get("status").toString().equals("1"));
 
             imageviewdeleteitem.setOnClickListener(view12 -> {
                 confirm.setTitle("Delete");
-                confirm.setMessage("Do you want to delete ".concat(filtered.get(_position).get("name").toString().concat(" ?")));
-                confirm.setPositiveButton("Yes", (_dialog, _which) -> _delete(_position));
+                confirm.setMessage("Do you want to delete ".concat(filtered.get(position).get("name").toString().concat(" ?")));
+                confirm.setPositiveButton("Yes", (_dialog, _which) -> _delete(position));
                 confirm.setNegativeButton("No", (_dialog, _which) -> {
 
                 });
                 confirm.create().show();
             });
             switch1.setOnClickListener(view1 -> {
-                if (filtered.get(_position).get("status").toString().equals("1")) {
-                    toset = filtered.get(_position);
+                if (filtered.get(position).get("status").toString().equals("1")) {
+                    toset = filtered.get(position);
                     toset.put("status", "0");
                     switch1.setChecked(false);
-                    db4.child(filtered.get(_position).get("id").toString()).updateChildren(toset);
+                    db4.child(filtered.get(position).get("id").toString()).updateChildren(toset);
                 } else {
-                    toset = filtered.get(_position);
+                    toset = filtered.get(position);
                     toset.put("status", "1");
                     switch1.setChecked(true);
-                    db4.child(filtered.get(_position).get("id").toString()).updateChildren(toset);
+                    db4.child(filtered.get(position).get("id").toString()).updateChildren(toset);
                 }
             });
 

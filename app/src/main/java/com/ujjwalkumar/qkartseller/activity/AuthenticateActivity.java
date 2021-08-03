@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -33,8 +34,6 @@ import java.util.HashMap;
 
 public class AuthenticateActivity extends AppCompatActivity {
 
-    private double t = 0;
-    private double flag = 0;
     private ArrayList<HashMap<String, Object>> lmp = new ArrayList<>();
 
     private LinearLayout linearlogin, linearsignup, linear14, linear19, linear20, linear4, linear10, linear11;
@@ -43,7 +42,7 @@ public class AuthenticateActivity extends AppCompatActivity {
     private ImageView imageviewlogin, imageviewsignup;
 
     private final FirebaseDatabase firebase = FirebaseDatabase.getInstance();
-    private final Intent ina = new Intent();
+    private final Intent in = new Intent();
     private final ObjectAnimator anix = new ObjectAnimator();
     private final ObjectAnimator aniy = new ObjectAnimator();
     private final DatabaseReference db1 = firebase.getReference("sellers");
@@ -79,6 +78,39 @@ public class AuthenticateActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         sp1 = getSharedPreferences("info", Activity.MODE_PRIVATE);
+
+        if ((FirebaseAuth.getInstance().getCurrentUser() != null)) {
+            if (sp1.getString("name", "").equals("")) {
+                in.setAction(Intent.ACTION_VIEW);
+                in.setClass(getApplicationContext(), EditDetailsActivity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(in);
+                finish();
+            } else {
+                in.setAction(Intent.ACTION_VIEW);
+                in.setClass(getApplicationContext(), HomeActivity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(in);
+                finish();
+            }
+        }
+
+        GradientDrawable gd1 = new GradientDrawable();
+        gd1.setColor(Color.parseColor("#FFFFFF"));
+        gd1.setCornerRadius(50);
+        linear14.setBackground(gd1);
+        linear4.setBackground(gd1);
+
+        GradientDrawable gd2 = new GradientDrawable();
+        gd2.setColor(Color.parseColor("#FFCCBC"));
+        gd2.setCornerRadius(80);
+        linear19.setBackground(gd2);
+        linear20.setBackground(gd2);
+        linear10.setBackground(gd2);
+        linear11.setBackground(gd2);
+
+        linearlogin.setVisibility(View.VISIBLE);
+        linearsignup.setVisibility(View.GONE);
 
         textviewforgot.setOnClickListener(view -> {
             if (edittextle.getText().toString().equals("")) {
@@ -163,16 +195,16 @@ public class AuthenticateActivity extends AppCompatActivity {
         });
 
         auth_create_user_listener = param1 -> {
-            final boolean _success = param1.isSuccessful();
+            final boolean success = param1.isSuccessful();
             final String errorMessage = param1.getException() != null ? param1.getException().getMessage() : "";
             ani.cancel();
             imageviewsignup.setRotation((float) (0));
             imageviewsignup.setImageResource(R.drawable.ic_arrow_forward_black);
-            if (_success) {
-                ina.setAction(Intent.ACTION_VIEW);
-                ina.setClass(getApplicationContext(), EditDetailsActivity.class);
-                ina.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(ina);
+            if (success) {
+                in.setAction(Intent.ACTION_VIEW);
+                in.setClass(getApplicationContext(), EditDetailsActivity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(in);
                 finish();
             } else {
                 Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
@@ -180,46 +212,44 @@ public class AuthenticateActivity extends AppCompatActivity {
         };
 
         auth_sign_in_listener = param1 -> {
-            final boolean _success = param1.isSuccessful();
+            final boolean success = param1.isSuccessful();
             final String errorMessage = param1.getException() != null ? param1.getException().getMessage() : "";
-            if (_success) {
+            if (success) {
                 db1.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         lmp = new ArrayList<>();
                         try {
-                            GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {
+                            GenericTypeIndicator<HashMap<String, Object>> ind = new GenericTypeIndicator<HashMap<String, Object>>() {
                             };
                             for (DataSnapshot data : snapshot.getChildren()) {
-                                HashMap<String, Object> _map = data.getValue(_ind);
-                                lmp.add(_map);
+                                HashMap<String, Object> map = data.getValue(ind);
+                                lmp.add(map);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        t = 0;
-                        flag = -1;
-                        for (int _repeat16 = 0; _repeat16 < lmp.size(); _repeat16++) {
-                            if (lmp.get((int) t).get("uid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                                flag = t;
+
+                        int flag = -1;
+                        for (int i = 0; i < lmp.size(); i++) {
+                            if (lmp.get(i).get("uid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                                flag = i;
                                 break;
-                            } else {
-                                t++;
                             }
                         }
                         if (!(flag == -1)) {
                             sp1.edit().putString("uid", FirebaseAuth.getInstance().getCurrentUser().getUid()).apply();
-                            sp1.edit().putString("email", lmp.get((int) flag).get("email").toString()).apply();
-                            sp1.edit().putString("name", lmp.get((int) flag).get("name").toString()).apply();
-                            sp1.edit().putString("address", lmp.get((int) flag).get("address").toString()).apply();
-                            sp1.edit().putString("lat", lmp.get((int) flag).get("lat").toString()).apply();
-                            sp1.edit().putString("lng", lmp.get((int) flag).get("lng").toString()).apply();
-                            sp1.edit().putString("contact", lmp.get((int) flag).get("contact").toString()).apply();
-                            sp1.edit().putString("img", lmp.get((int) flag).get("img").toString()).apply();
-                            ina.setAction(Intent.ACTION_VIEW);
-                            ina.setClass(getApplicationContext(), HomeActivity.class);
-                            ina.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                            startActivity(ina);
+                            sp1.edit().putString("email", lmp.get(flag).get("email").toString()).apply();
+                            sp1.edit().putString("name", lmp.get(flag).get("name").toString()).apply();
+                            sp1.edit().putString("address", lmp.get(flag).get("address").toString()).apply();
+                            sp1.edit().putString("lat", lmp.get(flag).get("lat").toString()).apply();
+                            sp1.edit().putString("lng", lmp.get(flag).get("lng").toString()).apply();
+                            sp1.edit().putString("contact", lmp.get(flag).get("contact").toString()).apply();
+                            sp1.edit().putString("img", lmp.get(flag).get("img").toString()).apply();
+                            in.setAction(Intent.ACTION_VIEW);
+                            in.setClass(getApplicationContext(), HomeActivity.class);
+                            in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            startActivity(in);
                             finish();
                         } else {
                             Toast.makeText(AuthenticateActivity.this, "This email corresponds to a customer.", Toast.LENGTH_SHORT).show();
@@ -241,77 +271,32 @@ public class AuthenticateActivity extends AppCompatActivity {
         };
 
         auth_reset_password_listener = param1 -> {
-            final boolean _success = param1.isSuccessful();
-            if (_success) {
+            final boolean success = param1.isSuccessful();
+            if (success) {
                 Toast.makeText(this, "Password reset mail sent.", Toast.LENGTH_SHORT).show();
             }
         };
 
-        if ((FirebaseAuth.getInstance().getCurrentUser() != null)) {
-            if (sp1.getString("name", "").equals("")) {
-                ina.setAction(Intent.ACTION_VIEW);
-                ina.setClass(getApplicationContext(), EditDetailsActivity.class);
-                ina.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(ina);
-                finish();
-            } else {
-                ina.setAction(Intent.ACTION_VIEW);
-                ina.setClass(getApplicationContext(), HomeActivity.class);
-                ina.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(ina);
-                finish();
-            }
-        } else {
-            android.graphics.drawable.GradientDrawable gd1 = new android.graphics.drawable.GradientDrawable();
-            gd1.setColor(Color.parseColor("#FFFFFF"));
-            gd1.setCornerRadius(50);
-            linear14.setBackground(gd1);
-            android.graphics.drawable.GradientDrawable gd2 = new android.graphics.drawable.GradientDrawable();
-            gd2.setColor(Color.parseColor("#FFCCBC"));
-            gd2.setCornerRadius(80);
-            linear19.setBackground(gd2);
-            android.graphics.drawable.GradientDrawable gd3 = new android.graphics.drawable.GradientDrawable();
-            gd3.setColor(Color.parseColor("#FFCCBC"));
-            gd3.setCornerRadius(80);
-            linear20.setBackground(gd3);
-            android.graphics.drawable.GradientDrawable gd4 = new android.graphics.drawable.GradientDrawable();
-            gd4.setColor(Color.parseColor("#FFFFFF"));
-            gd4.setCornerRadius(50);
-            linear4.setBackground(gd4);
-            android.graphics.drawable.GradientDrawable gd6 = new android.graphics.drawable.GradientDrawable();
-            gd6.setColor(Color.parseColor("#FFCCBC"));
-            gd6.setCornerRadius(80);
-            linear10.setBackground(gd6);
-            android.graphics.drawable.GradientDrawable gd7 = new android.graphics.drawable.GradientDrawable();
-            gd7.setColor(Color.parseColor("#FFCCBC"));
-            gd7.setCornerRadius(80);
-            linear11.setBackground(gd7);
-            linearlogin.setVisibility(View.VISIBLE);
-            linearsignup.setVisibility(View.GONE);
-
-            db1.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    lmp = new ArrayList<>();
-                    try {
-                        GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {
-                        };
-                        for (DataSnapshot data : snapshot.getChildren()) {
-                            HashMap<String, Object> _map = data.getValue(_ind);
-                            lmp.add(_map);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+        db1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                lmp = new ArrayList<>();
+                try {
+                    GenericTypeIndicator<HashMap<String, Object>> ind = new GenericTypeIndicator<HashMap<String, Object>>() {};
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        HashMap<String, Object> map = data.getValue(ind);
+                        lmp.add(map);
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
-
-        }
+            }
+        });
     }
 
 }

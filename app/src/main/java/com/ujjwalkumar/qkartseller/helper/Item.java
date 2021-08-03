@@ -1,6 +1,6 @@
 package com.ujjwalkumar.qkartseller.helper;
 // this class keeps details of a item
-public class items {
+public class Item {
     private String detail;      // to store item details
     private String id;          // to store id
     private String mrp;         // to store MRP
@@ -10,7 +10,7 @@ public class items {
     private String status;      // to store availability status (1 if available else 0)
 
     // constructor of the items class
-    public items(String detail, String id, String mrp, String name, String price, String sellerid, String status){
+    public Item(String detail, String id, String mrp, String name, String price, String sellerid, String status){
         this.detail=detail;
         this.id=id;
         this.mrp=mrp;

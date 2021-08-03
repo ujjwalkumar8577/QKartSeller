@@ -33,7 +33,6 @@ import java.util.HashMap;
 
 public class OrderDetailsActivity extends AppCompatActivity {
 
-    private final Intent ino = new Intent();
     private HashMap<String, Object> tmp = new HashMap<>();
     private double lat = 0;
     private double lng = 0;
@@ -41,10 +40,12 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
     private TextView textviewname, textviewaddress, textviewreview, textviewamt;
     private ImageView imageviewback, imageviewcall, imageviewlocate, imageview1, imageview2, imageview3, imageview4;
-    private MapView mapview1;
-    private GoogleMapController mapview1_controller;
     private LinearLayout linear11, linear12, linear13;
     private ListView listview1;
+
+    private final Intent in = new Intent();
+    private MapView mapview1;
+    private GoogleMapController mapview1_controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +73,15 @@ public class OrderDetailsActivity extends AppCompatActivity {
         imageviewback.setOnClickListener(view -> finish());
 
         imageviewcall.setOnClickListener(view -> {
-            ino.setAction(Intent.ACTION_CALL);
-            ino.setData(Uri.parse("tel:".concat(tmp.get("contact").toString())));
-            startActivity(ino);
+            in.setAction(Intent.ACTION_CALL);
+            in.setData(Uri.parse("tel:".concat(tmp.get("contact").toString())));
+            startActivity(in);
         });
 
         imageviewlocate.setOnClickListener(view -> {
-            ino.setAction(Intent.ACTION_VIEW);
-            ino.setData(Uri.parse("google.navigation:q=".concat(tmp.get("lat").toString().concat(",".concat(tmp.get("lng").toString())))));
-            startActivity(ino);
+            in.setAction(Intent.ACTION_VIEW);
+            in.setData(Uri.parse("google.navigation:q=".concat(tmp.get("lat").toString().concat(",".concat(tmp.get("lng").toString())))));
+            startActivity(in);
         });
 
         mapview1_controller = new GoogleMapController(mapview1, _googleMap -> {
@@ -200,7 +201,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(final int _position, View view, ViewGroup viewGroup) {
+        public View getView(final int position, View view, ViewGroup viewGroup) {
             LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = view;
             if (v == null) {
@@ -224,10 +225,10 @@ public class OrderDetailsActivity extends AppCompatActivity {
             imageviewdeleteitem.setVisibility(View.GONE);
             switch1.setVisibility(View.GONE);
             textviewitemmrp.setVisibility(View.INVISIBLE);
-            textviewitemname.setText(item.get(_position).get("name").toString());
-            textviewitemprice.setText(item.get(_position).get("price").toString());
-            textviewitemdetail.setText(item.get(_position).get("detail").toString());
-            textviewqty.setText(item.get(_position).get("qty").toString());
+            textviewitemname.setText(item.get(position).get("name").toString());
+            textviewitemprice.setText(item.get(position).get("price").toString());
+            textviewitemdetail.setText(item.get(position).get("detail").toString());
+            textviewqty.setText(item.get(position).get("qty").toString());
 
             return v;
         }

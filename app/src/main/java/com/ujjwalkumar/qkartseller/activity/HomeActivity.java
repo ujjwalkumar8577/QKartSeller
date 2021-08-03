@@ -3,12 +3,11 @@ package com.ujjwalkumar.qkartseller.activity;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ujjwalkumar.qkartseller.R;
-import com.ujjwalkumar.qkartseller.utility.RequestNetwork;
-import com.ujjwalkumar.qkartseller.utility.RequestNetworkController;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -44,42 +41,27 @@ import java.util.HashMap;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private final ArrayList<HashMap<String, Object>> filtered = new ArrayList<>();
-    private double t = 0;
     private String UID = "";
     private double lat = 0;
     private double lng = 0;
-    private double u = 0;
     private HashMap<String, Object> cmap = new HashMap<>();
-    private double dist = 0;
-    private double lat1 = 0;
-    private double lon1 = 0;
-    private double lat2 = 0;
-    private double lon2 = 0;
-    private double dlat = 0;
-    private double dlon = 0;
-    private double a = 0;
     private HashMap<String, Object> tmp = new HashMap<>();
-    private HashMap<String, Object> fmap = new HashMap<>();
     private HashMap<String, Object> order = new HashMap<>();
-    private double status = 0;
-    private ArrayList<HashMap<String, Object>> lmp_orders = new ArrayList<>();
+    private ArrayList<HashMap<String, Object>> filtered = new ArrayList<>();
 
     private ImageView imageviewabout, imageviewcart;
     private ListView listview1;
     private TextView textviewstatus;
     private LinearLayout lineardash, linearcomp, linearitems, linearhelp, linearaccount, linearloading;
 
+    private final Intent in = new Intent();
     private final FirebaseDatabase firebase = FirebaseDatabase.getInstance();
-    private final Intent inh = new Intent();
     private final DatabaseReference db2 = firebase.getReference("consumers");
     private final DatabaseReference db3 = firebase.getReference("orders");
     private final Calendar cal = Calendar.getInstance();
     private final ObjectAnimator ani1 = new ObjectAnimator();
     private SharedPreferences sp1;
     private AlertDialog.Builder confirm;
-    private RequestNetwork checkConnection;
-    private RequestNetwork.RequestListener checkConnection_request_listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,22 +81,23 @@ public class HomeActivity extends AppCompatActivity {
 
         sp1 = getSharedPreferences("info", Activity.MODE_PRIVATE);
         confirm = new AlertDialog.Builder(this);
-        checkConnection = new RequestNetwork(this);
+        if(!checkConnectivity())
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
 
         imageviewabout.setOnClickListener(view -> {
-            inh.setAction(Intent.ACTION_VIEW);
-            inh.setClass(getApplicationContext(), AboutActivity.class);
-            inh.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(inh);
+            in.setAction(Intent.ACTION_VIEW);
+            in.setClass(getApplicationContext(), AboutActivity.class);
+            in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(in);
         });
 
         listview1.setOnItemClickListener((param1, param2, param3, param4) -> {
             tmp = filtered.get(param3);
-            inh.setAction(Intent.ACTION_VIEW);
-            inh.setClass(getApplicationContext(), OrderDetailsActivity.class);
-            inh.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            inh.putExtra("map", new Gson().toJson(tmp));
-            startActivity(inh);
+            in.setAction(Intent.ACTION_VIEW);
+            in.setClass(getApplicationContext(), OrderDetailsActivity.class);
+            in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            in.putExtra("map", new Gson().toJson(tmp));
+            startActivity(in);
         });
 
         lineardash.setOnClickListener(view -> {
@@ -122,74 +105,33 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         linearcomp.setOnClickListener(view -> {
-            inh.setAction(Intent.ACTION_VIEW);
-            inh.setClass(getApplicationContext(), OrdersActivity.class);
-            inh.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(inh);
+            in.setAction(Intent.ACTION_VIEW);
+            in.setClass(getApplicationContext(), OrdersActivity.class);
+            in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(in);
         });
 
         linearitems.setOnClickListener(view -> {
-            inh.setAction(Intent.ACTION_VIEW);
-            inh.setClass(getApplicationContext(), ManageItemsActivity.class);
-            inh.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(inh);
+            in.setAction(Intent.ACTION_VIEW);
+            in.setClass(getApplicationContext(), ManageItemsActivity.class);
+            in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(in);
         });
 
         linearhelp.setOnClickListener(view -> {
-            inh.setAction(Intent.ACTION_VIEW);
-            inh.setClass(getApplicationContext(), HelpActivity.class);
-            inh.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            inh.putExtra("oid", "");
-            startActivity(inh);
+            in.setAction(Intent.ACTION_VIEW);
+            in.setClass(getApplicationContext(), HelpActivity.class);
+            in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            in.putExtra("oid", "");
+            startActivity(in);
         });
 
         linearaccount.setOnClickListener(view -> {
-            inh.setAction(Intent.ACTION_VIEW);
-            inh.setClass(getApplicationContext(), AccountActivity.class);
-            inh.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(inh);
+            in.setAction(Intent.ACTION_VIEW);
+            in.setClass(getApplicationContext(), AccountActivity.class);
+            in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(in);
         });
-
-        db3.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                GenericTypeIndicator<HashMap<String, Object>> ind = new GenericTypeIndicator<HashMap<String, Object>>() {};
-                final String _childKey = snapshot.getKey();
-                final HashMap<String, Object> _childValue = snapshot.getValue(ind);
-                if (_childValue.get("selleruid").toString().equals(UID)) {
-                    Notification.Builder mBuilder = new Notification.Builder(HomeActivity.this);
-                    mBuilder.setSmallIcon(R.drawable.qkartseller);
-                    mBuilder.setContentTitle("Q Kart Seller");
-                    mBuilder.setContentText("Received a new order");
-                    mBuilder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
-
-                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-                    Intent notificationIntent = new Intent(getApplicationContext(), HomeActivity.class);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent, PendingIntent.FLAG_NO_CREATE);
-
-                    mBuilder.setContentIntent(pendingIntent).setAutoCancel(true);
-                    notificationManager.notify(1, mBuilder.build());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        checkConnection_request_listener = new RequestNetwork.RequestListener() {
-            @Override
-            public void onResponse(String param1, String param2) {
-
-            }
-
-            @Override
-            public void onErrorResponse(String param1, String param2) {
-                Toast.makeText(HomeActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
-            }
-        };
 
         UID = sp1.getString("uid", "");
         lat = Double.parseDouble(sp1.getString("lat", ""));
@@ -200,7 +142,6 @@ public class HomeActivity extends AppCompatActivity {
         ani1.setInterpolator(new BounceInterpolator());
         ani1.setDuration(15000);
         ani1.start();
-        checkConnection.startRequestNetwork(RequestNetworkController.GET, "https://www.google.com/", "A", checkConnection_request_listener);
         loadlist();
     }
 
@@ -208,32 +149,26 @@ public class HomeActivity extends AppCompatActivity {
         db3.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                lmp_orders = new ArrayList<>();
+                filtered = new ArrayList<>();
                 try {
                     GenericTypeIndicator<HashMap<String, Object>> ind = new GenericTypeIndicator<HashMap<String, Object>>() {};
                     for (DataSnapshot data : snapshot.getChildren()) {
-                        HashMap<String, Object> _map = data.getValue(ind);
-                        lmp_orders.add(_map);
+                        HashMap<String, Object> map = data.getValue(ind);
+                        if (map.get("selleruid").toString().equals(UID) && !map.get("status").toString().equals("4")) {
+                            cmap = new Gson().fromJson(map.get("custmap").toString(), new TypeToken<HashMap<String, Object>>() {}.getType());
+                            map.put("custid", cmap.get("custid").toString());
+                            map.put("name", cmap.get("name").toString());
+                            map.put("address", cmap.get("address").toString());
+                            map.put("lat", cmap.get("lat").toString());
+                            map.put("lng", cmap.get("lng").toString());
+                            map.put("contact", cmap.get("contact").toString());
+                            filtered.add(map);
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                t = 0;
-                u = 0;
-                for (int index = 0; index < lmp_orders.size(); index++) {
-                    if (lmp_orders.get((int) t).get("selleruid").toString().equals(UID) && !lmp_orders.get((int) t).get("status").toString().equals("4")) {
-                        cmap = new Gson().fromJson(lmp_orders.get((int) t).get("custmap").toString(), new TypeToken<HashMap<String, Object>>() {}.getType());
-                        fmap = lmp_orders.get((int) t);
-                        fmap.put("custid", cmap.get("custid").toString());
-                        fmap.put("name", cmap.get("name").toString());
-                        fmap.put("address", cmap.get("address").toString());
-                        fmap.put("lat", cmap.get("lat").toString());
-                        fmap.put("lng", cmap.get("lng").toString());
-                        fmap.put("contact", cmap.get("contact").toString());
-                        filtered.add(fmap);
-                    }
-                    t++;
-                }
+
                 if (filtered.size() > 0) {
                     ani1.cancel();
                     linearloading.setVisibility(View.GONE);
@@ -252,15 +187,22 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void calculateDistance(final double latc, final double lngc) {
-        lat1 = Math.toRadians(lat);
-        lon1 = Math.toRadians(lng);
-        lat2 = Math.toRadians(latc);
-        lon2 = Math.toRadians(lngc);
-        dlat = lat2 - lat1;
-        dlon = lon2 - lon1;
-        a = (Math.sin(dlat / 2) * Math.sin(dlat / 2)) + ((Math.cos(lat1 / 2) * Math.cos(lat2 / 2)) * (Math.sin(dlon / 2) * Math.sin(dlon / 2)));
-        dist = 12742 * Math.asin(Math.sqrt(a));
+    private boolean checkConnectivity() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        return info != null && info.isConnected() && info.isAvailable();
+    }
+
+    private double calculateDistance(final double latc, final double lngc) {
+        double lat1 = Math.toRadians(lat);
+        double lon1 = Math.toRadians(lng);
+        double lat2 = Math.toRadians(latc);
+        double lon2 = Math.toRadians(lngc);
+        double dlat = lat2 - lat1;
+        double dlon = lon2 - lon1;
+        double a = (Math.sin(dlat / 2) * Math.sin(dlat / 2)) + ((Math.cos(lat1 / 2) * Math.cos(lat2 / 2)) * (Math.sin(dlon / 2) * Math.sin(dlon / 2)));
+        double dist = 12742 * Math.asin(Math.sqrt(a));
+        return dist;
     }
 
     public class Listview1Adapter extends BaseAdapter {
@@ -307,14 +249,14 @@ public class HomeActivity extends AppCompatActivity {
             final ImageView imageview4 = v.findViewById(R.id.imageview4);
             final TextView textvieworderid = v.findViewById(R.id.textvieworderid);
 
-            calculateDistance(Double.parseDouble(filtered.get(position).get("lat").toString()), Double.parseDouble(filtered.get(position).get("lng").toString()));
+            double dist = calculateDistance(Double.parseDouble(filtered.get(position).get("lat").toString()), Double.parseDouble(filtered.get(position).get("lng").toString()));
             cal.setTimeInMillis((long) (Double.parseDouble(filtered.get(position).get("time").toString())));
             textviewname.setText(filtered.get(position).get("name").toString());
             textviewamt.setText(filtered.get(position).get("amt").toString());
             textviewdist.setText(new DecimalFormat("0.00").format(dist));
             textviewtime.setText(new SimpleDateFormat("dd-MM-yyyy   HH:mm:ss").format(cal.getTime()));
             textvieworderid.setText(filtered.get(position).get("oid").toString());
-            status = Double.parseDouble(filtered.get(position).get("status").toString());
+            int status = Integer.parseInt(filtered.get(position).get("status").toString());
             if ((status > 1) || (status == 1)) {
                 imageview1.setImageResource(R.drawable.status1);
             }
@@ -330,7 +272,7 @@ public class HomeActivity extends AppCompatActivity {
             linear4.setOnClickListener(view14 -> {
                 confirm.setTitle("Confirm");
                 confirm.setMessage("Do you want to mark it as 'ordered'?");
-                confirm.setPositiveButton("Yes", (_dialog, _which) -> {
+                confirm.setPositiveButton("Yes", (dialog, _which) -> {
                     order = new HashMap<>();
                     order.put("oid", filtered.get(position).get("oid").toString());
                     order.put("selleruid", filtered.get(position).get("selleruid").toString());
@@ -350,7 +292,7 @@ public class HomeActivity extends AppCompatActivity {
                     filtered.get(position).put("status", "1");
                     Toast.makeText(HomeActivity.this, "Marked as ordered", Toast.LENGTH_SHORT).show();
                 });
-                confirm.setNegativeButton("No", (_dialog, _which) -> {
+                confirm.setNegativeButton("No", (dialog, _which) -> {
 
                 });
                 confirm.create().show();
@@ -358,7 +300,7 @@ public class HomeActivity extends AppCompatActivity {
             linear5.setOnClickListener(view13 -> {
                 confirm.setTitle("Confirm");
                 confirm.setMessage("Do you want to mark it as 'confirmed'?");
-                confirm.setPositiveButton("Yes", (_dialog, _which) -> {
+                confirm.setPositiveButton("Yes", (dialog, _which) -> {
                     order = new HashMap<>();
                     order.put("oid", filtered.get(position).get("oid").toString());
                     order.put("selleruid", filtered.get(position).get("selleruid").toString());
@@ -378,7 +320,7 @@ public class HomeActivity extends AppCompatActivity {
                     filtered.get(position).put("status", "2");
                     Toast.makeText(HomeActivity.this, "Marked as confirmed", Toast.LENGTH_SHORT).show();
                 });
-                confirm.setNegativeButton("No", (_dialog, _which) -> {
+                confirm.setNegativeButton("No", (dialog, _which) -> {
 
                 });
                 confirm.create().show();
@@ -386,7 +328,7 @@ public class HomeActivity extends AppCompatActivity {
             linear6.setOnClickListener(view12 -> {
                 confirm.setTitle("Confirm");
                 confirm.setMessage("Do you want to mark it as 'shipped'?");
-                confirm.setPositiveButton("Yes", (_dialog, _which) -> {
+                confirm.setPositiveButton("Yes", (dialog, _which) -> {
                     order = new HashMap<>();
                     order.put("oid", filtered.get(position).get("oid").toString());
                     order.put("selleruid", filtered.get(position).get("selleruid").toString());
@@ -406,7 +348,7 @@ public class HomeActivity extends AppCompatActivity {
                     filtered.get(position).put("status", "3");
                     Toast.makeText(HomeActivity.this, "Marked as shipped", Toast.LENGTH_SHORT).show();
                 });
-                confirm.setNegativeButton("No", (_dialog, _which) -> {
+                confirm.setNegativeButton("No", (dialog, _which) -> {
 
                 });
                 confirm.create().show();
@@ -414,7 +356,7 @@ public class HomeActivity extends AppCompatActivity {
             linear7.setOnClickListener(view1 -> {
                 confirm.setTitle("Confirm");
                 confirm.setMessage("Do you want to mark it as 'delivered'?");
-                confirm.setPositiveButton("Yes", (_dialog, _which) -> {
+                confirm.setPositiveButton("Yes", (dialog, _which) -> {
                     order = new HashMap<>();
                     order.put("oid", filtered.get(position).get("oid").toString());
                     order.put("selleruid", filtered.get(position).get("selleruid").toString());
@@ -434,7 +376,7 @@ public class HomeActivity extends AppCompatActivity {
                     filtered.get(position).put("status", "4");
                     Toast.makeText(HomeActivity.this, "Marked as delivered", Toast.LENGTH_SHORT).show();
                 });
-                confirm.setNegativeButton("No", (_dialog, _which) -> {
+                confirm.setNegativeButton("No", (dialog, _which) -> {
 
                 });
                 confirm.create().show();

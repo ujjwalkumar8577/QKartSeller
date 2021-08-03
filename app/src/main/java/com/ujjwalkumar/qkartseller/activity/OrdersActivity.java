@@ -38,16 +38,8 @@ public class OrdersActivity extends AppCompatActivity {
     private double t = 0;
     private double u = 0;
     private String UID = "";
-    private double lat1 = 0;
     private double lat = 0;
-    private double lon1 = 0;
     private double lng = 0;
-    private double lat2 = 0;
-    private double lon2 = 0;
-    private double dlat = 0;
-    private double dlon = 0;
-    private double a = 0;
-    private double dist = 0;
     private HashMap<String, Object> tmp = new HashMap<>();
     private double sum = 0;
     private HashMap<String, Object> cmap = new HashMap<>();
@@ -142,15 +134,16 @@ public class OrdersActivity extends AppCompatActivity {
         });
     }
 
-    private void calculateDistance(final double latc, final double lngc) {
-        lat1 = Math.toRadians(lat);
-        lon1 = Math.toRadians(lng);
-        lat2 = Math.toRadians(latc);
-        lon2 = Math.toRadians(lngc);
-        dlat = lat2 - lat1;
-        dlon = lon2 - lon1;
-        a = (Math.sin(dlat / 2) * Math.sin(dlat / 2)) + ((Math.cos(lat1 / 2) * Math.cos(lat2 / 2)) * (Math.sin(dlon / 2) * Math.sin(dlon / 2)));
-        dist = 12742 * Math.asin(Math.sqrt(a));
+    private double calculateDistance(final double latc, final double lngc) {
+        double lat1 = Math.toRadians(lat);
+        double lon1 = Math.toRadians(lng);
+        double lat2 = Math.toRadians(latc);
+        double lon2 = Math.toRadians(lngc);
+        double dlat = lat2 - lat1;
+        double dlon = lon2 - lon1;
+        double a = (Math.sin(dlat / 2) * Math.sin(dlat / 2)) + ((Math.cos(lat1 / 2) * Math.cos(lat2 / 2)) * (Math.sin(dlon / 2) * Math.sin(dlon / 2)));
+        double dist = 12742 * Math.asin(Math.sqrt(a));
+        return dist;
     }
 
     public class Listview1Adapter extends BaseAdapter {
@@ -176,7 +169,7 @@ public class OrdersActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(final int _position, View view, ViewGroup viewGroup) {
+        public View getView(final int position, View view, ViewGroup viewGroup) {
             LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = view;
             if (v == null) {
@@ -193,13 +186,13 @@ public class OrdersActivity extends AppCompatActivity {
             final ImageView imageview4 = v.findViewById(R.id.imageview4);
             final TextView textvieworderid = v.findViewById(R.id.textvieworderid);
 
-            calculateDistance(Double.parseDouble(filtered.get(_position).get("lat").toString()), Double.parseDouble(filtered.get(_position).get("lng").toString()));
-            cal.setTimeInMillis((long) (Double.parseDouble(filtered.get(_position).get("time").toString())));
-            textviewname.setText(filtered.get(_position).get("name").toString());
-            textviewamt.setText(filtered.get(_position).get("amt").toString());
+            double dist = calculateDistance(Double.parseDouble(filtered.get(position).get("lat").toString()), Double.parseDouble(filtered.get(position).get("lng").toString()));
+            cal.setTimeInMillis((long) (Double.parseDouble(filtered.get(position).get("time").toString())));
+            textviewname.setText(filtered.get(position).get("name").toString());
+            textviewamt.setText(filtered.get(position).get("amt").toString());
             textviewdist.setText(new DecimalFormat("0.00").format(dist));
             textviewtime.setText(new SimpleDateFormat("dd-MM-yyyy   HH:mm:ss").format(cal.getTime()));
-            textvieworderid.setText(filtered.get(_position).get("oid").toString());
+            textvieworderid.setText(filtered.get(position).get("oid").toString());
             imageview1.setImageResource(R.drawable.status1);
             imageview2.setImageResource(R.drawable.status2);
             imageview3.setImageResource(R.drawable.status3);

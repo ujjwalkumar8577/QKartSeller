@@ -1,6 +1,6 @@
 package com.ujjwalkumar.qkartseller.helper;
 // this class keeps details of a seller
-public class sellers {
+public class Seller {
     private String address;     // to store address
     private String contact;     // to store contact number
     private String email;       // to store email address
@@ -12,7 +12,7 @@ public class sellers {
     private String range;       // to store delivery range of selller
 
     // constructor of the sellers class
-    public sellers(String address, String contact, String email, String img, String lat, String lng, String name, String uid, String range){
+    public Seller(String address, String contact, String email, String img, String lat, String lng, String name, String uid, String range){
         this.address=address;
         this.contact=contact;
         this.email=email;

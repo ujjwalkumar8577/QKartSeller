@@ -1,234 +1,227 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/linearlayout"
+    <ImageView
+        android:id="@+id/imageviewprofile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/shop" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_height="200dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/imageviewprofile"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/transparent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/shop" />
-
-        <ScrollView
-            android:id="@+id/vscroll1"
+        <LinearLayout
+            android:id="@+id/linear4"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_margin="20dp"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:alpha="0.9"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/textview1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Shop Name"
+                android:textColor="#212121"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <LinearLayout
-                android:id="@+id/linear4"
+                android:id="@+id/linear21"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:alpha="0.9"
-                android:background="#FFFFFF"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:background="#FFCCBC"
+                android:orientation="horizontal"
+                android:padding="8dp">
 
-                <TextView
-                    android:id="@+id/textview1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="Shop Name"
-                    android:textColor="#212121"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/linear21"
+                <EditText
+                    android:id="@+id/edittextname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFCCBC"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <EditText
-                        android:id="@+id/edittextname"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter your shop name"
-                        android:inputType="text"
-                        android:imeOptions="actionNext"
-                        android:padding="8dp"
-                        android:singleLine="true"
-                        android:textColor="#000000"
-                        android:textColorHint="#607D8B"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textview2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:hint="Enter your shop name"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"
                     android:padding="8dp"
-                    android:text="Contact"
-                    android:textColor="#212121"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/linear10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FFCCBC"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <EditText
-                        android:id="@+id/edittextcontact"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter your contact"
-                        android:imeOptions="actionNext"
-                        android:inputType="phone"
-                        android:padding="8dp"
-                        android:singleLine="true"
-                        android:textColor="#000000"
-                        android:textColorHint="#607D8B"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textview3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="Address"
-                    android:textColor="#212121"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/linear11"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FFCCBC"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <EditText
-                        android:id="@+id/edittextaddress1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="House No./Road Name"
-                        android:inputType="textPostalAddress"
-                        android:imeOptions="actionNext"
-                        android:padding="8dp"
-                        android:singleLine="true"
-                        android:textColor="#000000"
-                        android:textColorHint="#607D8B"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:id="@+id/edittextaddress2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Area/City"
-                        android:inputType="textPostalAddress"
-                        android:imeOptions="actionNext"
-                        android:padding="8dp"
-                        android:singleLine="true"
-                        android:textColor="#000000"
-                        android:textColorHint="#607D8B"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:id="@+id/edittextaddress3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Landmark (optional)"
-                        android:inputType="textPostalAddress"
-                        android:imeOptions="actionNext"
-                        android:padding="8dp"
-                        android:singleLine="true"
-                        android:textColor="#000000"
-                        android:textColorHint="#607D8B"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:id="@+id/edittextaddress4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Pincode"
-                        android:imeOptions="actionNext"
-                        android:inputType="numberSigned"
-                        android:padding="8dp"
-                        android:singleLine="true"
-                        android:textColor="#000000"
-                        android:textColorHint="#607D8B"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textview4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="Range"
+                    android:singleLine="true"
                     android:textColor="#000000"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/linear22"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FFCCBC"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <EditText
-                        android:id="@+id/edittextrange"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Enter delivery range in Km"
-                        android:imeOptions="actionDone"
-                        android:inputType="numberDecimal"
-                        android:padding="8dp"
-                        android:singleLine="true"
-                        android:textColor="#000000"
-                        android:textColorHint="#607D8B"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textviewstatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="Updating your current location ... "
-                    android:textColor="#000000"
-                    android:textSize="12sp" />
-
-                <com.google.android.gms.maps.MapView
-                    android:id="@+id/mapview1"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp" />
+                    android:textColorHint="#607D8B"
+                    android:textSize="14sp" />
             </LinearLayout>
-        </ScrollView>
 
-        <Button
-            android:id="@+id/buttondone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:alpha="0.9"
-            android:background="#FF1744"
-            android:padding="8dp"
-            android:text="Done"
-            android:textColor="#000000"
-            android:textSize="12sp" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textview2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Contact"
+                android:textColor="#212121"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/linear10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFCCBC"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <EditText
+                    android:id="@+id/edittextcontact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter your contact"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textColorHint="#607D8B"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textview3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Address"
+                android:textColor="#212121"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/linear11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFCCBC"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <EditText
+                    android:id="@+id/edittextaddress1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="House No./Road Name"
+                    android:inputType="textPostalAddress"
+                    android:imeOptions="actionNext"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textColorHint="#607D8B"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edittextaddress2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Area/City"
+                    android:inputType="textPostalAddress"
+                    android:imeOptions="actionNext"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textColorHint="#607D8B"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edittextaddress3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Landmark (optional)"
+                    android:inputType="textPostalAddress"
+                    android:imeOptions="actionNext"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textColorHint="#607D8B"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edittextaddress4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pincode"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberSigned"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textColorHint="#607D8B"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textview4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Range"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/linear22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFCCBC"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <EditText
+                    android:id="@+id/edittextrange"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter delivery range in Km"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textColorHint="#607D8B"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textviewstatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Updating your current location ... "
+                android:textColor="#000000"
+                android:textSize="12sp" />
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapview1"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/buttondone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:alpha="0.9"
+        android:background="#FF1744"
+        android:padding="8dp"
+        android:text="Done"
+        android:textColor="#000000"
+        android:textSize="12sp" />
+
 </LinearLayout>

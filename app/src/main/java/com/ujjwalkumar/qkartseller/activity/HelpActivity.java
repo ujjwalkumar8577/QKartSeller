@@ -24,7 +24,7 @@ public class HelpActivity extends AppCompatActivity {
     private HashMap<String, Object> mp = new HashMap<>();
 
     private ImageView imageviewback;
-    private LinearLayout linear2;
+    private LinearLayout linearLayout;
     private Button buttonsend;
     private EditText feed;
 
@@ -38,10 +38,21 @@ public class HelpActivity extends AppCompatActivity {
         setContentView(R.layout.help);
 
         imageviewback = findViewById(R.id.imageviewback);
-        linear2 = findViewById(R.id.linear2);
+        linearLayout = findViewById(R.id.linearLayout);
         buttonsend = findViewById(R.id.buttonsend);
         feed = findViewById(R.id.feed);
+
         sp1 = getSharedPreferences("info", Activity.MODE_PRIVATE);
+
+        GradientDrawable gd1 = new GradientDrawable();
+        gd1.setColor(Color.parseColor("#FF1744"));
+        gd1.setCornerRadius(30);
+        buttonsend.setBackground(gd1);
+
+        GradientDrawable gd2 = new GradientDrawable();
+        gd2.setColor(Color.parseColor("#FFFFFF"));
+        gd2.setCornerRadius(30);
+        linearLayout.setBackground(gd2);
 
         imageviewback.setOnClickListener(view -> finish());
 
@@ -59,16 +70,6 @@ public class HelpActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please enter the message", Toast.LENGTH_SHORT).show();
             }
         });
-
-        GradientDrawable gd1 = new GradientDrawable();
-        gd1.setColor(Color.parseColor("#FF1744"));
-        gd1.setCornerRadius(30);
-        buttonsend.setBackground(gd1);
-
-        GradientDrawable gd2 = new GradientDrawable();
-        gd2.setColor(Color.parseColor("#FFFFFF"));
-        gd2.setCornerRadius(30);
-        linear2.setBackground(gd2);
     }
 
 }

@@ -15,11 +15,12 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
+    private LinearLayout layout;
+
     private final Timer timer = new Timer();
     private final Intent in = new Intent();
     private final ObjectAnimator anix = new ObjectAnimator();
     private final ObjectAnimator aniy = new ObjectAnimator();
-    private LinearLayout layout;
     private TimerTask splash;
 
     @Override

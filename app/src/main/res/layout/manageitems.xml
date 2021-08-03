@@ -1,247 +1,226 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/blank"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/blank"
+        android:layout_height="60dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/imageviewback"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_arrow_back_white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Manage Items"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <ListView
+            android:id="@+id/listview1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:choiceMode="none"
+            android:dividerHeight="2dp"
+            android:padding="8dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <LinearLayout
-            android:id="@+id/linear5"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:background="#FFCCBC"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="5dp">
-
-            <ImageView
-                android:id="@+id/imageviewback"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:scaleType="center"
-                android:src="@drawable/ic_arrow_back_white" />
+            android:padding="2dp">
 
             <TextView
-                android:id="@+id/textview5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:padding="8dp"
-                android:text="Manage Items"
-                android:textColor="#FFFFFF"
-                android:textSize="25sp"
+                android:text="Add new item"
+                android:textColor="#000000"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linear6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:orientation="horizontal"
+            android:padding="2dp">
 
-            <ListView
-                android:id="@+id/listview1"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Name                   :"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/edittext1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:choiceMode="none"
-                android:dividerHeight="2dp"
-                android:padding="8dp" />
+                android:inputType="text"
+                android:imeOptions="actionNext"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="#000000"
+                android:textColorHint="#607D8B"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linear7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:orientation="horizontal"
+            android:padding="2dp">
 
-            <LinearLayout
-                android:id="@+id/linear16"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Details                 :"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/edittext2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFCCBC"
+                android:inputType="text"
+                android:imeOptions="actionNext"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="#000000"
+                android:textColorHint="#607D8B"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="MRP                     :"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/edittext4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="#000000"
+                android:textColorHint="#607D8B"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Selling Price        :"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/edittext3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="#000000"
+                android:textColorHint="#607D8B"
+                android:textSize="12sp" />
+
+            <CheckBox
+                android:id="@+id/checkbox1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="2dp">
+                android:padding="4dp"
+                android:text="Same as MRP"
+                android:textColor="#000000"
+                android:textSize="11sp" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textview13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="8dp"
-                    android:text="Add new item"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp">
 
-            <LinearLayout
-                android:id="@+id/linear17"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/buttonclear"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="2dp">
+                android:background="#FF1744"
+                android:padding="8dp"
+                android:text="Clear"
+                android:textColor="#000000"
+                android:textSize="12sp" />
 
-                <TextView
-                    android:id="@+id/textview15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="Name                   :"
-                    android:textColor="#000000"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/edittext1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:imeOptions="actionNext"
-                    android:padding="8dp"
-                    android:singleLine="true"
-                    android:textColor="#000000"
-                    android:textColorHint="#607D8B"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linear201"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/buttonadd"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="2dp">
-
-                <TextView
-                    android:id="@+id/textview18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="Details                 :"
-                    android:textColor="#000000"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/edittext2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:imeOptions="actionNext"
-                    android:padding="8dp"
-                    android:singleLine="true"
-                    android:textColor="#000000"
-                    android:textColorHint="#607D8B"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linear202"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="2dp">
-
-                <TextView
-                    android:id="@+id/textview19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="MRP                     :"
-                    android:textColor="#000000"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/edittext4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="numberDecimal"
-                    android:padding="8dp"
-                    android:singleLine="true"
-                    android:textColor="#000000"
-                    android:textColorHint="#607D8B"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linear18"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="2dp">
-
-                <TextView
-                    android:id="@+id/textview17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="Selling Price        :"
-                    android:textColor="#000000"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/edittext3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:imeOptions="actionDone"
-                    android:inputType="numberDecimal"
-                    android:padding="8dp"
-                    android:singleLine="true"
-                    android:textColor="#000000"
-                    android:textColorHint="#607D8B"
-                    android:textSize="12sp" />
-
-                <CheckBox
-                    android:id="@+id/checkbox1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:padding="4dp"
-                    android:text="Same as MRP"
-                    android:textColor="#000000"
-                    android:textSize="11sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linear20"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center_horizontal|center_vertical"
-                android:orientation="horizontal"
-                android:padding="8dp">
-
-                <Button
-                    android:id="@+id/buttonclear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FF1744"
-                    android:padding="8dp"
-                    android:text="Clear"
-                    android:textColor="#000000"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/buttonadd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="#FF1744"
-                    android:padding="8dp"
-                    android:text="Add"
-                    android:textColor="#000000"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#FF1744"
+                android:padding="8dp"
+                android:text="Add"
+                android:textColor="#000000"
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

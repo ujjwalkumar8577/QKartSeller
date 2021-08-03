@@ -20,11 +20,10 @@ import com.ujjwalkumar.qkartseller.R;
 
 public class AccountActivity extends AppCompatActivity {
 
-    private final Intent inp = new Intent();
-    private LinearLayout linear4, linearedit;
-    private TextView textviewsignout;
+    private final Intent in = new Intent();
+    private LinearLayout linearLayout, linearedit;
     private ImageView imageviewback, imageviewprofile;
-    private TextView textviewname, textviewcontact, textviewemail, textviewaddress;
+    private TextView textviewname, textviewcontact, textviewemail, textviewaddress, textviewsignout;
     private SharedPreferences sp1;
     private AlertDialog.Builder confirm;
 
@@ -33,7 +32,7 @@ public class AccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account);
 
-        linear4 = findViewById(R.id.linear4);
+        linearLayout = findViewById(R.id.linearLayout);
         linearedit = findViewById(R.id.linearedit);
         textviewsignout = findViewById(R.id.textviewsignout);
         imageviewback = findViewById(R.id.imageviewback);
@@ -47,10 +46,10 @@ public class AccountActivity extends AppCompatActivity {
         confirm = new AlertDialog.Builder(this);
 
         linearedit.setOnClickListener(view -> {
-            inp.setAction(Intent.ACTION_VIEW);
-            inp.setClass(getApplicationContext(), EditDetailsActivity.class);
-            inp.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(inp);
+            in.setAction(Intent.ACTION_VIEW);
+            in.setClass(getApplicationContext(), EditDetailsActivity.class);
+            in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(in);
             finish();
         });
 
@@ -67,10 +66,10 @@ public class AccountActivity extends AppCompatActivity {
                 sp1.edit().putString("lng", "").apply();
                 sp1.edit().putString("contact", "").apply();
                 sp1.edit().putString("img", "").apply();
-                inp.setAction(Intent.ACTION_VIEW);
-                inp.setClass(getApplicationContext(), AuthenticateActivity.class);
-                inp.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(inp);
+                in.setAction(Intent.ACTION_VIEW);
+                in.setClass(getApplicationContext(), AuthenticateActivity.class);
+                in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(in);
                 finish();
             });
             confirm.setNegativeButton("No", (_dialog, _which) -> {
@@ -80,10 +79,10 @@ public class AccountActivity extends AppCompatActivity {
         });
 
         imageviewback.setOnClickListener(view -> {
-            inp.setAction(Intent.ACTION_VIEW);
-            inp.setClass(getApplicationContext(), HomeActivity.class);
-            inp.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(inp);
+            in.setAction(Intent.ACTION_VIEW);
+            in.setClass(getApplicationContext(), HomeActivity.class);
+            in.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(in);
             finish();
         });
 
@@ -95,7 +94,7 @@ public class AccountActivity extends AppCompatActivity {
         GradientDrawable gd2 = new GradientDrawable();
         gd2.setColor(Color.parseColor("#FFFFFF"));
         gd2.setCornerRadius(50);
-        linear4.setBackground(gd2);
+        linearLayout.setBackground(gd2);
 
         textviewname.setText(sp1.getString("name", ""));
         textviewcontact.setText(sp1.getString("contact", ""));

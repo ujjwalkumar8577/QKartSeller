@@ -1,64 +1,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="50dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/qkartseller" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Q-Kart Seller"
+        android:textColor="#FF1744"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FF9800"
+        android:padding="8dp"
+        android:text="Improve your businness"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:text="Droid_Run"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
     <LinearLayout
-        android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:gravity="center_horizontal|center_vertical"
-        android:orientation="vertical">
+        android:layout_height="200dp"
+        android:layout_gravity="bottom"
+        android:alpha="0.95"
+        android:background="@drawable/img"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="8dp" />
 
-        <ImageView
-            android:id="@+id/imageviewlogo"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="50dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/qkartseller" />
-
-        <TextView
-            android:id="@+id/textviewtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Q-Kart Seller"
-            android:textColor="#FF1744"
-            android:textSize="50sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textviewsubtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#FF9800"
-            android:padding="8dp"
-            android:text="Improve your businness"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/textviewdeveloper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_weight="1"
-            android:padding="8dp"
-            android:text="Droid_Run"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:id="@+id/linearbanner"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_gravity="bottom"
-            android:alpha="0.95"
-            android:background="@drawable/img"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            android:padding="8dp" />
-    </LinearLayout>
 </LinearLayout>

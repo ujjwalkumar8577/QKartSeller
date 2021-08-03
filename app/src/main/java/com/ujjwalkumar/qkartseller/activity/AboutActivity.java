@@ -12,23 +12,23 @@ import com.ujjwalkumar.qkartseller.R;
 
 public class AboutActivity extends AppCompatActivity {
 
-    private ImageView imageviewback;
-    private LinearLayout linear2;
+    private ImageView imageViewBack;
+    private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
 
-        imageviewback = findViewById(R.id.imageviewback);
-        linear2 = findViewById(R.id.linear2);
+        imageViewBack = findViewById(R.id.imageViewBack);
+        linearLayout = findViewById(R.id.linearLayout);
 
-        imageviewback.setOnClickListener(view -> finish());
+        imageViewBack.setOnClickListener(view -> finish());
 
         GradientDrawable gd1 = new GradientDrawable();
         gd1.setColor(Color.parseColor("#FFCCBC"));
         gd1.setCornerRadius(30);
-        linear2.setBackground(gd1);
+        linearLayout.setBackground(gd1);
     }
 
 }
